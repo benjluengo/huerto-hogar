@@ -4,15 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HUERTO HOGAR</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="navbar">
-        <a href="index.html" class="nav-brand">Huerto Hogar</a>
-        <div class="nav-links">
-            <a></a>
-            <a></a>
-            <a></a>
+    <nav class="navbar">
+        <a href="index.html" class="nav-brand">
+            🥕 Huerto Hogar
+        </a>
+        <div class="nav-user">
+            <div class="user-menu">
+                <button class="user-icon" onclick="toggleUserMenu()">
+                    <i class="fa-solid fa-user"></i>
+                </button>
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="pages/login.html" class="dropdown-item">Iniciar Sesión</a>
+                    <a href="pages/register.html" class="dropdown-item">Registrarse</a>
+                </div>
+            </div>
         </div>
-    </div>
+    </nav>
+
+    <main>
+        <!-- Contenido principal aquí -->
+        <div class="hero-section">
+            <h1>¡Descubre la frescura del campo con Huerto Hogar!</h1>
+            <p>Conéctate con la naturaleza y lleva lo mejor del campo a tu mesa.</p>
+        </div>
+    </main>
+
+    <script src="js/script.js"></script>
 </body>
 </html>
