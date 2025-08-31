@@ -159,7 +159,7 @@ function setupFormHandlers() {
     editFields.forEach(fieldId => {
         const input = document.getElementById(fieldId);
         if (input) {
-            input.addEventListener('input', () => clearError(fieldId));
+            input.addEventListener('input', () => clearProfileError(fieldId));
         }
     });
 }
@@ -265,12 +265,6 @@ function handleProfileUpdate(event) {
         localStorage.setItem('huertohogar_users', JSON.stringify(allUsers));
     }
     localStorage.setItem('huertohogar_currentUser', JSON.stringify(currentUser));
-}
-    if (userIndex !== -1) {
-        allUsers[userIndex] = currentUser;
-        localStorage.setItem('huertohogar_users', JSON.stringify(allUsers));
-    }
-    localStorage.setItem('huertohogar_currentUser', JSON.stringify(currentUser));
 
     // Mostrar mensaje de éxito
     const successAlert = document.getElementById('successAlert');
@@ -357,3 +351,39 @@ function generateSamplePurchases() {
     // Actualizar en localStorage
     const allUsers = JSON.parse(localStorage.getItem('huertohogar_users') || '[]');
     const userIndex = allUsers.findIndex(u => u.id === currentUser.id);
+    if (userIndex !== -1) {
+        allUsers[userIndex] = currentUser;
+        localStorage.setItem('huertohogar_users', JSON.stringify(allUsers));
+    }
+    localStorage.setItem('huertohogar_currentUser', JSON.stringify(currentUser));
+}
+
+// Funciones auxiliares (si no están definidas en auth.js)
+
+// Función para validar email (definida en auth.js, pero por si acaso)
+function validateEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Función para validar teléfono chileno (definida en auth.js, pero por si acaso)
+function validatePhone(phone) {
+    const phoneRegex = /^(\+?56)?(\s?)(9)(\s?)([0-9]{4})(\s?)([0-9]{4})$/;
+    return phoneRegex.test(phone);
+}
+
+// Función para actualizar la navbar con información del usuario
+function updateProfileNavbar() {
+    if (currentUser) {
+        const userIcon = document.querySelector('.user-icon');
+        if (userIcon) {
+            const initials = `${currentUser.firstName.charAt(0)}${currentUser.lastName.charAt(0)}`.toUpperCase();
+            userIcon.innerHTML = initials;
+            userIcon.style.fontSize = '0.9rem';
+            userIcon.style.fontWeight = '600';
+        }
+    }
+}
+
+// Llamar a la función de actualización de navbar cuando se carga el perfil
+setTimeout(updateProfileNavbar, 100);
