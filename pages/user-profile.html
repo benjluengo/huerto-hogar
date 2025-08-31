@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - HUERTO HOGAR</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/user-profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="../index.html" class="nav-brand">
+            🥕 Huerto Hogar
+        </a>
+        <div class="nav-user">
+            <div class="user-menu">
+                <button class="user-icon" onclick="toggleUserMenu()">
+                    <i class="fa-solid fa-user"></i>
+                </button>
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="user-profile.html" class="dropdown-item active">Mi Perfil</a>
+                    <a href="#" class="dropdown-item" onclick="logout()">Cerrar Sesión</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="profile-container">
+        <!-- Sidebar del Perfil -->
+        <aside class="profile-sidebar">
+            <div class="profile-avatar">
+                <div class="avatar-circle" id="userAvatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="profile-name" id="userName">Usuario</div>
+                <div class="profile-email" id="userEmail">usuario@email.com</div>
+            </div>
+
+            <ul class="profile-menu">
+                <li>
+                    <a href="#" class="menu-item active" data-section="personal-info">
+                        <i class="fas fa-user"></i>
+                        Información Personal
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="menu-item" data-section="purchase-history">
+                        <i class="fas fa-shopping-bag"></i>
+                        Historial de Compras
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="menu-item" data-section="statistics">
+                        <i class="fas fa-chart-line"></i>
+                        Mis Estadísticas
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Contenido Principal del Perfil -->
+        <div class="profile-content">
+            <!-- Sección: Información Personal -->
+            <div class="profile-section active" id="personal-info">
+                <div class="content-header">
+                    <h2><i class="fas fa-user"></i> Información Personal</h2>
+                    <button class="edit-btn" id="editBtn" onclick="toggleEditMode()">
+                        <i class="fas fa-edit"></i>
+                        Editar
+                    </button>
+                </div>
+
+                <div class="success-alert" id="successAlert">
+                    <i class="fas fa-check-circle"></i>
+                    Información actualizada correctamente
+                </div>
+
+                <!-- Vista de Solo Lectura -->
+                <div id="readOnlyView">
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <div class="info-label">
+                                <i class="fas fa-user"></i>
+                                Nombre Completo
+                            </div>
+                            <div class="info-value" id="displayName">-</div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-label">
+                                <i class="fas fa-envelope"></i>
+                                Correo Electrónico
+                            </div>
+                            <div class="info-value" id="displayEmail">-</div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-label">
+                                <i class="fas fa-phone"></i>
+                                Teléfono
+                            </div>
+                            <div class="info-value" id="displayPhone">-</div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-label">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Dirección
+                            </div>
+                            <div class="info-value" id="displayAddress">-</div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-label">
+                                <i class="fas fa-calendar"></i>
+                                Miembro desde
+                            </div>
+                            <div class="info-value" id="displayMemberSince">-</div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-label">
+                                <i class="fas fa-bell"></i>
+                                Newsletter
+                            </div>
+                            <div class="info-value" id="displayNewsletter">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vista de Edición -->
+                <div id="editView" style="display: none;">
+                    <form id="profileForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editFirstName">
+                                    <i class="fas fa-user"></i>
+                                    Nombre
+                                </label>
+                                <input type="text" id="editFirstName" required>
+                                <span class="error-message" id="editFirstNameError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="editLastName">
+                                    <i class="fas fa-user"></i>
+                                    Apellido
+                                </label>
+                                <input type="text" id="editLastName" required>
+                                <span class="error-message" id="editLastNameError"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editEmail">
+                                <i class="fas fa-envelope"></i>
+                                Correo Electrónico
+                            </label>
+                            <input type="email" id="editEmail" required>
+                            <span class="error-message" id="editEmailError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editPhone">
+                                <i class="fas fa-phone"></i>
+                                Teléfono
+                            </label>
+                            <input type="tel" id="editPhone" required placeholder="+56 9 1234 5678">
+                            <span class="error-message" id="editPhoneError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editAddress">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Dirección de Entrega
+                            </label>
+                            <input type="text" id="editAddress" required placeholder="Calle, número, comuna, ciudad">
+                            <span class="error-message" id="editAddressError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="editNewsletter">
+                                <span class="checkmark"></span>
+                                Quiero recibir ofertas y noticias por email
+                            </label>
+                        </div>
+
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button type="submit" class="edit-btn save">
+                                <i class="fas fa-save"></i>
+                                Guardar Cambios
+                            </button>
+                            <button type="button" class="edit-btn cancel" onclick="cancelEdit()">
+                                <i class="fas fa-times"></i>
+                                Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Sección: Historial de Compras -->
+            <div class="profile-section" id="purchase-history">
+                <div class="content-header">
+                    <h2><i class="fas fa-shopping-bag"></i> Historial de Compras</h2>
+                </div>
+
+                <div id="purchasesList">
+                    <!-- Las compras se cargarán dinámicamente -->
+                </div>
+
+                <div class="empty-state" id="emptyPurchases" style="display: none;">
+                    <i class="fas fa-shopping-basket"></i>
+                    <h3>No has realizado compras aún</h3>
+                    <p>¡Explora nuestros productos frescos y haz tu primera compra!</p>
+                </div>
+            </div>
+
+            <!-- Sección: Estadísticas -->
+            <div class="profile-section" id="statistics">
+                <div class="content-header">
+                    <h2><i class="fas fa-chart-line"></i> Mis Estadísticas</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalPurchases">0</div>
+                        <div class="stat-label">Total de Compras</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalSpent">$0</div>
+                        <div class="stat-label">Total Gastado</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number" id="avgPurchase">$0</div>
+                        <div class="stat-label">Compra Promedio</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-number" id="memberDays">0</div>
+                        <div class="stat-label">Días como Miembro</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-label">
+                        <i class="fas fa-heart"></i>
+                        Producto Favorito
+                    </div>
+                    <div class="info-value" id="favoriteProduct">Aún no tienes un producto favorito</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/profile.js"></script>
+</body>
+
+</html>
