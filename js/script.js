@@ -65,10 +65,10 @@ function updateNavbarForUser() {
         }
 
         userDropdown.innerHTML = `
-            <a href="pages/login.html" class="dropdown-item">
+            <a href="${getCorrectPath('pages/login.html')}" class="dropdown-item">
                 <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
             </a>
-            <a href="pages/register.html" class="dropdown-item">
+            <a href="${getCorrectPath('pages/register.html')}" class="dropdown-item">
                 <i class="fas fa-user-plus"></i> Registrarse
             </a>
         `;
