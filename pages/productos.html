@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos - HUERTO HOGAR</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="../index.html" class="nav-brand">
+            🥕 Huerto Hogar
+        </a>
+        <div class="nav-menu">
+            <a href="../index.html" class="nav-link">Inicio</a>
+            <a href="productos.html" class="nav-link active">Productos</a>
+        </div>
+        <div class="nav-user">
+            <div class="user-menu">
+                <button class="user-icon" onclick="toggleUserMenu()">
+                    <i class="fa-solid fa-user"></i>
+                </button>
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="login.html" class="dropdown-item">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                    </a>
+                    <a href="register.html" class="dropdown-item">
+                        <i class="fas fa-user-plus"></i> Registrarse
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="products-section">
+            <div class="container">
+                <h2 class="section-title">Nuestros Productos</h2>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://laveguitadengo.cl/wp-content/uploads/2022/04/manzanafuji.jpg" alt="Manzana Fuji">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Manzana Fuji</h3>
+                            <p class="product-price">$1200</p>
+                            <p class="product-stock">Stock: 150 kilos</p>
+                            <p class="product-description">Manzanas Fuji crujientes y dulces, cultivadas en el Valle del Maule.</p>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIHgoNtFN0RdqBpFCBWh0MXX_J29OwOvCE7Q&s" alt="Naranjas Valencia">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Naranjas Valencia</h3>
+                            <p class="product-price">$1000</p>
+                            <p class="product-stock">Stock: 200 kilos</p>
+                            <p class="product-description">Jugosas y ricas en vitamina C, estas naranjas Valencia son ideales para zumos frescos y refrescantes.</p>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://buyfromcostarica.com/wp-content/uploads/2023/06/elle_s_produce_exports_banano_cavendich_producto_principal.jpg" alt="Plátanos Cavendish">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Plátanos Cavendish</h3>
+                            <p class="product-price">$800</p>
+                            <p class="product-stock">Stock: 250 kilos</p>
+                            <p class="product-description">Plátanos maduros y dulces, perfectos para el desayuno o como snack energético.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/script.js"></script>
+</body>
+
+</html>
