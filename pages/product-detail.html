@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producto - HUERTO HOGAR</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="../index.html" class="nav-brand">
+            🥕 Huerto Hogar
+        </a>
+        <div class="nav-menu">
+            <a href="../index.html" class="nav-link">Inicio</a>
+            <a href="productos.html" class="nav-link">Productos</a>
+        </div>
+        <div class="nav-user">
+            <div class="user-menu">
+                <button class="user-icon" onclick="toggleUserMenu()">
+                    <i class="fa-solid fa-user"></i>
+                </button>
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="login.html" class="dropdown-item">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                    </a>
+                    <a href="register.html" class="dropdown-item">
+                        <i class="fas fa-user-plus"></i> Registrarse
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="product-detail-section">
+            <div class="container">
+                <div class="product-detail">
+                    <div class="product-image-large">
+                        <img id="productImage" src="" alt="">
+                    </div>
+                    <div class="product-info-detail">
+                        <h1 id="productName" class="product-title"></h1>
+                        <p id="productPrice" class="product-price-detail"></p>
+                        <p id="productStock" class="product-stock-detail"></p>
+                        <div class="quantity-selector">
+                            <label for="quantity">Cantidad:</label>
+                            <button class="quantity-btn" onclick="decreaseQuantity()">-</button>
+                            <input type="number" id="quantity" value="1" min="1" max="99">
+                            <button class="quantity-btn" onclick="increaseQuantity()">+</button>
+                        </div>
+                        <button class="add-to-cart-btn" onclick="addToCart()">
+                            <i class="fas fa-shopping-cart"></i> Agregar al Carrito
+                        </button>
+                        <div class="product-description-extended">
+                            <h3>Descripción</h3>
+                            <p id="productDescription"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/product-detail.js"></script>
+</body>
+
+</html>

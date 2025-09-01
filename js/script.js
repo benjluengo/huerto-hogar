@@ -107,3 +107,86 @@ function getCorrectPath(path) {
     // Si estamos en la raíz, remover ../ si existe
     return path.replace('../', '');
 }
+
+// Función para actualizar el contador del carrito
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('huertohogar_cart') || '[]');
+    const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+
+    // Buscar elemento del contador del carrito
+    let cartCountElement = document.getElementById('cart-count');
+    if (cartCountElement) {
+        cartCountElement.textContent = totalItems;
+        cartCountElement.style.display = totalItems > 0 ? 'block' : 'none';
+    }
+}
+
+// Función para obtener el carrito actual
+function getCart() {
+    return JSON.parse(localStorage.getItem('huertohogar_cart') || '[]');
+}
+
+// Función para guardar el carrito
+function saveCart(cart) {
+    localStorage.setItem('huertohogar_cart', JSON.stringify(cart));
+    updateCartCount();
+}
+
+// Función para agregar producto al carrito (desde cualquier página)
+function addProductToCart(productName, price, quantity = 1, image = '') {
+    let cart = getCart();
+
+    // Verificar si el producto ya está en el carrito
+    const existingProductIndex = cart.findIndex(item => item.name === productName);
+
+    if (existingProductIndex > -1) {
+        // Actualizar cantidad si ya existe
+        cart[existingProductIndex].quantity += quantity;
+    } else {
+        // Agregar nuevo producto al carrito
+        cart.push({
+            name: productName,
+            price: parseInt(price),
+            quantity: quantity,
+            image: image
+        });
+    }
+
+    saveCart(cart);
+    return cart;
+}
+
+// Función para remover producto del carrito
+function removeFromCart(productName) {
+    let cart = getCart();
+    cart = cart.filter(item => item.name !== productName);
+    saveCart(cart);
+    return cart;
+}
+
+// Función para actualizar cantidad de producto en el carrito
+function updateCartItemQuantity(productName, newQuantity) {
+    let cart = getCart();
+    const productIndex = cart.findIndex(item => item.name === productName);
+
+    if (productIndex > -1) {
+        if (newQuantity <= 0) {
+            cart.splice(productIndex, 1);
+        } else {
+            cart[productIndex].quantity = newQuantity;
+        }
+        saveCart(cart);
+    }
+    return cart;
+}
+
+// Función para vaciar el carrito
+function clearCart() {
+    localStorage.removeItem('huertohogar_cart');
+    updateCartCount();
+}
+
+// Inicializar contador del carrito cuando se carga cualquier página
+document.addEventListener('DOMContentLoaded', function () {
+    updateCartCount();
+});
