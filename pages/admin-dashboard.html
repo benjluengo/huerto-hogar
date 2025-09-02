@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard Administrador - Huerto Hogar</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f4f9f4;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: #2f6627;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav h1 {
+            margin: 0;
+            font-weight: 700;
+        }
+        nav button {
+            background-color: #e74c3c;
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        nav button:hover {
+            background-color: #c0392b;
+        }
+        .container {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+        aside {
+            width: 220px;
+            background-color: #d9ead3;
+            padding: 1rem;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        aside ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        aside ul li {
+            margin-bottom: 1rem;
+        }
+        aside ul li button {
+            width: 100%;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            padding: 0.5rem;
+            text-align: left;
+            cursor: pointer;
+            color: #2f6627;
+            font-weight: 600;
+            border-radius: 4px;
+        }
+        aside ul li button.active,
+        aside ul li button:hover {
+            background-color: #a3c293;
+            color: #1b3a0a;
+        }
+        main {
+            flex-grow: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            background-color: white;
+        }
+        h2 {
+            color: #2f6627;
+            margin-top: 0;
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 0.5rem;
+            text-align: left;
+        }
+        th {
+            background-color: #a3c293;
+            color: #1b3a0a;
+        }
+        button.action-btn {
+            background-color: #2f6627;
+            color: white;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-right: 0.3rem;
+        }
+        button.action-btn:hover {
+            background-color: #1b3a0a;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: #2f6627;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="url"] {
+            width: 100%;
+            padding: 0.4rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .form-actions {
+            margin-top: 1rem;
+        }
+        .form-actions button {
+            background-color: #2f6627;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+        .form-actions button:hover {
+            background-color: #1b3a0a;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>Modo Administrador - Huerto Hogar</h1>
+        <button id="logoutBtn">Cerrar Sesión</button>
+    </nav>
+    <div class="container">
+        <aside>
+            <ul>
+                <li><button id="navProducts" class="active">Productos</button></li>
+                <li><button id="navUsers">Usuarios</button></li>
+            </ul>
+        </aside>
+        <main>
+            <!-- Sección Productos -->
+            <section id="sectionProducts" class="section active">
+                <h2>Gestión de Productos</h2>
+                <button id="btnNewProduct">Nuevo Producto</button>
+                <table id="productsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Categoría</th>
+                            <th>Stock</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Productos listados aquí -->
+                    </tbody>
+                </table>
+                <!-- Formulario para crear/editar producto -->
+                <form id="productForm" class="hidden">
+                    <h3 id="productFormTitle">Nuevo Producto</h3>
+                    <div class="form-group">
+                        <label for="productName">Nombre</label>
+                        <input type="text" id="productName" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="productPrice">Precio</label>
+                        <input type="number" id="productPrice" min="0" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="productCategory">Categoría</label>
+                        <input type="text" id="productCategory" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="productStock">Stock</label>
+                        <input type="number" id="productStock" min="0" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="productImage">URL Imagen</label>
+                        <input type="url" id="productImage" required />
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" id="saveProductBtn">Guardar</button>
+                        <button type="button" id="cancelProductBtn">Cancelar</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Sección Usuarios -->
+            <section id="sectionUsers" class="section">
+                <h2>Gestión de Usuarios</h2>
+                <button id="btnNewUser">Nuevo Usuario</button>
+                <table id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Email</th>
+                            <th>Teléfono</th>
+                            <th>Dirección</th>
+                            <th>Admin</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Usuarios listados aquí -->
+                    </tbody>
+                </table>
+                <!-- Formulario para crear/editar usuario -->
+                <form id="userForm" class="hidden">
+                    <h3 id="userFormTitle">Nuevo Usuario</h3>
+                    <div class="form-group">
+                        <label for="userFirstName">Nombre</label>
+                        <input type="text" id="userFirstName" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="userLastName">Apellido</label>
+                        <input type="text" id="userLastName" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="userEmail">Email</label>
+                        <input type="email" id="userEmail" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="userPhone">Teléfono</label>
+                        <input type="tel" id="userPhone" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="userAddress">Dirección</label>
+                        <input type="text" id="userAddress" required />
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="userIsAdmin" />
+                            Administrador
+                        </label>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" id="saveUserBtn">Guardar</button>
+                        <button type="button" id="cancelUserBtn">Cancelar</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Verificar sesión admin
+        if (localStorage.getItem('huertohogar_adminLoggedIn') !== 'true') {
+            window.location.href = 'admin-login.html';
+        }
+
+        // Logout admin
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('huertohogar_adminLoggedIn');
+            window.location.href = 'admin-login.html';
+        });
+
+        // Navegación entre secciones
+        const navProducts = document.getElementById('navProducts');
+        const navUsers = document.getElementById('navUsers');
+        const sectionProducts = document.getElementById('sectionProducts');
+        const sectionUsers = document.getElementById('sectionUsers');
+
+        navProducts.addEventListener('click', () => {
+            navProducts.classList.add('active');
+            navUsers.classList.remove('active');
+            sectionProducts.classList.add('active');
+            sectionUsers.classList.remove('active');
+            hideForms();
+        });
+
+        navUsers.addEventListener('click', () => {
+            navUsers.classList.add('active');
+            navProducts.classList.remove('active');
+            sectionUsers.classList.add('active');
+            sectionProducts.classList.remove('active');
+            hideForms();
+        });
+
+        // Variables para productos y usuarios
+        let products = JSON.parse(localStorage.getItem('huertohogar_products')) || [];
+        let users = JSON.parse(localStorage.getItem('huertohogar_users')) || [];
+
+        // Elementos productos
+        const productsTableBody = document.querySelector('#productsTable tbody');
+        const productForm = document.getElementById('productForm');
+        const productFormTitle = document.getElementById('productFormTitle');
+        const productNameInput = document.getElementById('productName');
+        const productPriceInput = document.getElementById('productPrice');
+        const productCategoryInput = document.getElementById('productCategory');
+        const productStockInput = document.getElementById('productStock');
+        const productImageInput = document.getElementById('productImage');
+        const btnNewProduct = document.getElementById('btnNewProduct');
+        const saveProductBtn = document.getElementById('saveProductBtn');
+        const cancelProductBtn = document.getElementById('cancelProductBtn');
+
+        // Variables para edición producto
+        let editingProductId = null;
+
+        // Elementos usuarios
+        const usersTableBody = document.querySelector('#usersTable tbody');
+        const userForm = document.getElementById('userForm');
+        const userFormTitle = document.getElementById('userFormTitle');
+        const userFirstNameInput = document.getElementById('userFirstName');
+        const userLastNameInput = document.getElementById('userLastName');
+        const userEmailInput = document.getElementById('userEmail');
+        const userPhoneInput = document.getElementById('userPhone');
+        const userAddressInput = document.getElementById('userAddress');
+        const userIsAdminInput = document.getElementById('userIsAdmin');
+        const btnNewUser = document.getElementById('btnNewUser');
+        const saveUserBtn = document.getElementById('saveUserBtn');
+        const cancelUserBtn = document.getElementById('cancelUserBtn');
+
+        // Variables para edición usuario
+        let editingUserId = null;
+
+        // Función para ocultar formularios
+        function hideForms() {
+            productForm.classList.add('hidden');
+            userForm.classList.add('hidden');
+            editingProductId = null;
+            editingUserId = null;
+        }
+
+        // Función para mostrar productos en tabla
+        function renderProducts() {
+            productsTableBody.innerHTML = '';
+            if (products.length === 0) {
+                productsTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No hay productos</td></tr>';
+                return;
+            }
+            products.forEach(product => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${product.id}</td>
+                    <td>${product.name}</td>
+                    <td>$${product.price.toLocaleString()}</td>
+                    <td>${product.category}</td>
+                    <td>${product.stock}</td>
+                    <td>
+                        <button class="action-btn" onclick="editProduct(${product.id})">Editar</button>
+                        <button class="action-btn" onclick="deleteProduct(${product.id})">Eliminar</button>
+                    </td>
+                `;
+                productsTableBody.appendChild(tr);
+            });
+        }
+
+        // Función para mostrar usuarios en tabla
+        function renderUsers() {
+            usersTableBody.innerHTML = '';
+            if (users.length === 0) {
+                usersTableBody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No hay usuarios</td></tr>';
+                return;
+            }
+            users.forEach(user => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.firstName}</td>
+                    <td>${user.lastName}</td>
+                    <td>${user.email}</td>
+                    <td>${user.phone}</td>
+                    <td>${user.address}</td>
+                    <td>${user.isAdmin ? 'Sí' : 'No'}</td>
+                    <td>
+                        <button class="action-btn" onclick="editUser(${user.id})">Editar</button>
+                        <button class="action-btn" onclick="deleteUser(${user.id})">Eliminar</button>
+                    </td>
+                `;
+                usersTableBody.appendChild(tr);
+            });
+        }
+
+        // Función para generar nuevo ID único
+        function generateId(collection) {
+            if (collection.length === 0) return 1;
+            return Math.max(...collection.map(item => item.id)) + 1;
+        }
+
+        // Funciones para productos
+
+        btnNewProduct.addEventListener('click', () => {
+            hideForms();
+            productFormTitle.textContent = 'Nuevo Producto';
+            productForm.reset();
+            productForm.classList.remove('hidden');
+        });
+
+        cancelProductBtn.addEventListener('click', () => {
+            hideForms();
+        });
+
+        productForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = productNameInput.value.trim();
+            const price = parseFloat(productPriceInput.value);
+            const category = productCategoryInput.value.trim();
+            const stock = parseInt(productStockInput.value);
+            const image = productImageInput.value.trim();
+
+            if (!name || isNaN(price) || !category || isNaN(stock) || !image) {
+                alert('Por favor, complete todos los campos correctamente.');
+                return;
+            }
+
+            if (editingProductId === null) {
+                // Crear nuevo producto
+                const newProduct = {
+                    id: generateId(products),
+                    name,
+                    price,
+                    category,
+                    stock,
+                    image
+                };
+                products.push(newProduct);
+            } else {
+                // Editar producto existente
+                const product = products.find(p => p.id === editingProductId);
+                if (product) {
+                    product.name = name;
+                    product.price = price;
+                    product.category = category;
+                    product.stock = stock;
+                    product.image = image;
+                }
+            }
+
+            localStorage.setItem('huertohogar_products', JSON.stringify(products));
+            renderProducts();
+            hideForms();
+        });
+
+        window.editProduct = function(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+            hideForms();
+            editingProductId = id;
+            productFormTitle.textContent = 'Editar Producto';
+            productNameInput.value = product.name;
+            productPriceInput.value = product.price;
+            productCategoryInput.value = product.category;
+            productStockInput.value = product.stock;
+            productImageInput.value = product.image;
+            productForm.classList.remove('hidden');
+        };
+
+        window.deleteProduct = function(id) {
+            if (!confirm('¿Está seguro de eliminar este producto?')) return;
+            products = products.filter(p => p.id !== id);
+            localStorage.setItem('huertohogar_products', JSON.stringify(products));
+            renderProducts();
+        };
+
+        // Funciones para usuarios
+
+        btnNewUser.addEventListener('click', () => {
+            hideForms();
+            userFormTitle.textContent = 'Nuevo Usuario';
+            userForm.reset();
+            userForm.classList.remove('hidden');
+        });
+
+        cancelUserBtn.addEventListener('click', () => {
+            hideForms();
+        });
+
+        userForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const firstName = userFirstNameInput.value.trim();
+            const lastName = userLastNameInput.value.trim();
+            const email = userEmailInput.value.trim();
+            const phone = userPhoneInput.value.trim();
+            const address = userAddressInput.value.trim();
+            const isAdmin = userIsAdminInput.checked;
+
+            if (!firstName || !lastName || !email || !phone || !address) {
+                alert('Por favor, complete todos los campos correctamente.');
+                return;
+            }
+
+            // Validar email único
+            const emailExists = users.some(u => u.email === email && u.id !== editingUserId);
+            if (emailExists) {
+                alert('El correo electrónico ya está registrado.');
+                return;
+            }
+
+            if (editingUserId === null) {
+                // Crear nuevo usuario
+                const newUser = {
+                    id: generateId(users),
+                    firstName,
+                    lastName,
+                    email,
+                    phone,
+                    address,
+                    isAdmin
+                };
+                users.push(newUser);
+            } else {
+                // Editar usuario existente
+                const user = users.find(u => u.id === editingUserId);
+                if (user) {
+                    user.firstName = firstName;
+                    user.lastName = lastName;
+                    user.email = email;
+                    user.phone = phone;
+                    user.address = address;
+                    user.isAdmin = isAdmin;
+                }
+            }
+
+            localStorage.setItem('huertohogar_users', JSON.stringify(users));
+            renderUsers();
+            hideForms();
+        });
+
+        window.editUser = function(id) {
+            const user = users.find(u => u.id === id);
+            if (!user) return;
+            hideForms();
+            editingUserId = id;
+            userFormTitle.textContent = 'Editar Usuario';
+            userFirstNameInput.value = user.firstName;
+            userLastNameInput.value = user.lastName;
+            userEmailInput.value = user.email;
+            userPhoneInput.value = user.phone;
+            userAddressInput.value = user.address;
+            userIsAdminInput.checked = user.isAdmin;
+            userForm.classList.remove('hidden');
+        };
+
+        window.deleteUser = function(id) {
+            if (!confirm('¿Está seguro de eliminar este usuario?')) return;
+            users = users.filter(u => u.id !== id);
+            localStorage.setItem('huertohogar_users', JSON.stringify(users));
+            renderUsers();
+        };
+
+        // Inicializar tablas
+        renderProducts();
+        renderUsers();
+    </script>
+</body>
+</html>

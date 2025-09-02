@@ -1,5 +1,4 @@
-// Productos disponibles
-const products = [
+let products = JSON.parse(localStorage.getItem('huertohogar_products')) || [
     {
         id: 1,
         name: "Tomates Orgánicos",
@@ -74,6 +73,35 @@ function displayFeaturedProducts() {
         </div>
     `).join('');
 }
+
+// Nueva función para mostrar todos los productos en la página productos.html
+function displayAllProducts() {
+    const productsGrid = document.getElementById('productsGrid');
+    if (!productsGrid) return;
+
+    productsGrid.innerHTML = products.map(product => `
+        <a href="product-detail.html?name=${encodeURIComponent(product.name)}&price=${product.price}&stock=${product.stock}&image=${encodeURIComponent(product.image)}&description=${encodeURIComponent(product.description || '')}" class="product-card">
+            <div class="product-image">
+                <img src="${product.image}" alt="${product.name}">
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-price">$${product.price.toLocaleString()} KG</p>
+                <p class="product-stock">Stock: ${product.stock} kilos</p>
+                <p class="product-description">${product.description || ''}</p>
+                <button class="btn-secondary" onclick="event.preventDefault(); addToCartFromProducts(${product.id});">
+                    <i class="fas fa-cart-plus"></i> Agregar al Carrito
+                </button>
+            </div>
+        </a>
+    `).join('');
+}
+
+// Inicializar cuando se carga la página
+document.addEventListener('DOMContentLoaded', function() {
+    displayFeaturedProducts();
+    displayAllProducts();
+});
 
 // Función para agregar producto al carrito (renombrada para evitar conflictos)
 function addToCartFromProducts(productId) {
