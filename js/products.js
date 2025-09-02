@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCartCount();
 });
 
-// Exportar funciones para uso global
+// Exportar funciones y datos para uso global
 window.addToCart = addToCart;
 window.getCart = getCart;
 window.clearCart = clearCart;
@@ -238,3 +238,4 @@ window.getCartTotal = getCartTotal;
 window.getProductById = getProductById;
 window.searchProducts = searchProducts;
 window.getProductsByCategory = getProductsByCategory;
+window.products = products;

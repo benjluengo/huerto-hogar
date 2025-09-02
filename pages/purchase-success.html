@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Producto - HUERTO HOGAR</title>
+    <title>Compra Exitosa - HUERTO HOGAR</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link
@@ -46,38 +46,52 @@
     </nav>
 
     <main>
-        <section class="product-detail-section">
+        <section class="success-section">
             <div class="container">
-                <div class="product-detail">
-                    <div class="product-image-large">
-                        <img id="productImage" src="" alt="">
-                    </div>
-                    <div class="product-info-detail">
-                        <h1 id="productName" class="product-title"></h1>
-                        <p id="productPrice" class="product-price-detail"></p>
-                        <p id="productStock" class="product-stock-detail"></p>
-                        <div class="quantity-selector">
-                            <label for="quantity">Cantidad:</label>
-                            <button class="quantity-btn" onclick="decreaseQuantity()">-</button>
-                            <input type="number" id="quantity" value="1" min="1" max="99">
-                            <button class="quantity-btn" onclick="increaseQuantity()">+</button>
-                        </div>
-                        <button class="add-to-cart-btn" onclick="addToCart()">
-                            <i class="fas fa-shopping-cart"></i> Agregar al Carrito
-                        </button>
-                        <div class="product-description-extended">
-                            <h3>Descripción</h3>
-                            <p id="productDescription"></p>
-                        </div>
+                <div class="success-message">
+                    <i class="fas fa-check-circle success-icon"></i>
+                    <h2>¡Compra Realizada con Éxito!</h2>
+                    <p>Gracias por tu compra. Tu pedido ha sido procesado correctamente.</p>
+                    <p>Recibirás un correo electrónico con los detalles de tu pedido.</p>
+                    <div class="success-actions">
+                        <a href="../index.html" class="btn-primary">Volver al Inicio</a>
+                        <a href="productos.html" class="btn-secondary">Seguir Comprando</a>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Huerto Hogar</h3>
+                    <p>Conectando el campo con tu mesa. Productos frescos y orgánicos directamente del productor.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="productos.html">Productos</a></li>
+                        <li><a href="contact.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p><i class="fas fa-phone"></i> +56 9 1234 5678</p>
+                    <p><i class="fas fa-envelope"></i> info@huertohogar.cl</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Santiago, Chile</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Huerto Hogar. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
     <script src="../js/script.js"></script>
-    <script src="../js/products.js"></script>
-    <script src="../js/product-detail.js"></script>
 </body>
 
 </html>

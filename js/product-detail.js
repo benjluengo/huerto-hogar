@@ -71,8 +71,13 @@ function addToCart() {
     // Obtener carrito actual del localStorage
     let cart = JSON.parse(localStorage.getItem('huertohogar_cart') || '[]');
 
+    // Buscar el producto en la lista de productos para obtener el ID correcto
+    // Nota: Esto asume que js/products.js está cargado en la página
+    const product = window.products ? window.products.find(p => p.name === productName) : null;
+    const productId = product ? product.id : Date.now(); // Usar timestamp como fallback si no se encuentra
+
     // Verificar si el producto ya está en el carrito
-    const existingProductIndex = cart.findIndex(item => item.name === productName);
+    const existingProductIndex = cart.findIndex(item => item.id === productId);
 
     if (existingProductIndex > -1) {
         // Actualizar cantidad si ya existe
@@ -80,6 +85,7 @@ function addToCart() {
     } else {
         // Agregar nuevo producto al carrito
         cart.push({
+            id: productId,
             name: productName,
             price: productPrice,
             quantity: quantity,
