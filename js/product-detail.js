@@ -21,13 +21,7 @@ function loadProductData() {
     }
 
     if (productPrice) {
-        let priceText = '$' + productPrice;
-        // Agregar "KG" para productos específicos
-        const keywords = ['Manzana', 'Zanahoria', 'Plátano', 'Pimiento', 'Naranja'];
-        if (keywords.some(keyword => productName.includes(keyword))) {
-            priceText += ' KG';
-        }
-        document.getElementById('productPrice').textContent = priceText;
+        document.getElementById('productPrice').textContent = '$' + productPrice;
     }
 
     if (productStock) {

@@ -61,13 +61,7 @@ function displayFeaturedProducts() {
     // Mostrar solo los primeros 6 productos
     const featuredProducts = products.slice(0, 6);
 
-    productsGrid.innerHTML = featuredProducts.map(product => {
-        let priceText = '$' + product.price.toLocaleString();
-        const keywords = ['Manzana', 'Zanahoria', 'Plátano', 'Pimiento', 'Naranja'];
-        if (keywords.some(keyword => product.name.includes(keyword))) {
-            priceText += ' KG';
-        }
-        return `
+    productsGrid.innerHTML = featuredProducts.map(product => `
         <div class="product-card">
             <img src="${product.image}" alt="${product.name}" class="product-image">
             <div class="product-info">
@@ -78,7 +72,7 @@ function displayFeaturedProducts() {
                 </button>
             </div>
         </div>
-    `}).join('');
+    `).join('');
 }
 
 // Función para agregar producto al carrito (renombrada para evitar conflictos)
