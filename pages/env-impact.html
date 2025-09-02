@@ -25,18 +25,24 @@
             <li><a href="contact.html" class="nav-link">Contacto</a></li>
             <li><a href="productos.html" class="nav-link">Productos</a></li>
         </ul>
-        <div class="nav-user">
-            <div class="user-menu">
-                <button class="user-icon" onclick="toggleUserMenu()">
-                    <i class="fa-solid fa-user"></i>
-                </button>
-                <div class="user-dropdown" id="userDropdown">
-                    <a href="login.html" class="dropdown-item">
-                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
-                    </a>
-                    <a href="register.html" class="dropdown-item">
-                        <i class="fas fa-user-plus"></i> Registrarse
-                    </a>
+        <div class="nav-actions">
+            <a href="pages/cart.html" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </a>
+            <div class="nav-user">
+                <div class="user-menu">
+                    <button class="user-icon" onclick="toggleUserMenu()">
+                        <i class="fa-solid fa-user"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="pages/login.html" class="dropdown-item">
+                            <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                        </a>
+                        <a href="pages/register.html" class="dropdown-item">
+                            <i class="fas fa-user-plus"></i> Registrarse
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

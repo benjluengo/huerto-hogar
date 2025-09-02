@@ -50,7 +50,7 @@ const products = [
     }
 ];
 
-// Carrito de compras
+// Carrito de compras - usar la misma estructura que script.js
 let cart = JSON.parse(localStorage.getItem('huertohogar_cart')) || [];
 
 // Función para mostrar productos destacados
@@ -67,7 +67,7 @@ function displayFeaturedProducts() {
             <div class="product-info">
                 <div class="product-name">${product.name}</div>
                 <div class="product-price">$${product.price.toLocaleString()}</div>
-                <button class="btn-secondary" onclick="addToCart(${product.id})">
+                <button class="btn-secondary" onclick="addToCartFromProducts(${product.id})">
                     <i class="fas fa-cart-plus"></i> Agregar al Carrito
                 </button>
             </div>
@@ -75,43 +75,15 @@ function displayFeaturedProducts() {
     `).join('');
 }
 
-// Función para agregar producto al carrito
-function addToCart(productId) {
+// Función para agregar producto al carrito (renombrada para evitar conflictos)
+function addToCartFromProducts(productId) {
     const product = products.find(p => p.id === productId);
     if (!product) return;
 
-    const existingItem = cart.find(item => item.id === productId);
-
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cart.push({
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            image: product.image,
-            quantity: 1
-        });
-    }
-
-    saveCart();
-    updateCartCount();
+    // Usar la función de script.js que maneja la estructura unificada
+    addProductToCart(product.name, product.price, 1, product.image);
+    
     showNotification(`${product.name} agregado al carrito`, 'success');
-}
-
-// Función para guardar carrito en localStorage
-function saveCart() {
-    localStorage.setItem('huertohogar_cart', JSON.stringify(cart));
-}
-
-// Función para actualizar contador del carrito
-function updateCartCount() {
-    const cartCount = document.getElementById('cartCount');
-    if (cartCount) {
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartCount.textContent = totalItems;
-        cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
-    }
 }
 
 // Función para mostrar notificaciones
@@ -151,8 +123,15 @@ function showNotification(message, type = 'info') {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
     `;
-    document.head.appendChild(style);
+    if (!document.head.querySelector('style[data-notification]')) {
+        style.setAttribute('data-notification', 'true');
+        document.head.appendChild(style);
+    }
 
     // Remover notificación después de 3 segundos
     setTimeout(() => {
@@ -184,57 +163,21 @@ function getProductById(id) {
     return products.find(product => product.id === id);
 }
 
-// Función para obtener carrito
-function getCart() {
-    return cart;
-}
-
-// Función para vaciar carrito
-function clearCart() {
-    cart = [];
-    saveCart();
-    updateCartCount();
-}
-
-// Función para remover item del carrito
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    saveCart();
-    updateCartCount();
-}
-
-// Función para actualizar cantidad en carrito
-function updateCartItemQuantity(productId, quantity) {
-    const item = cart.find(item => item.id === productId);
-    if (item) {
-        if (quantity <= 0) {
-            removeFromCart(productId);
-        } else {
-            item.quantity = quantity;
-            saveCart();
-            updateCartCount();
-        }
-    }
-}
-
 // Función para calcular total del carrito
 function getCartTotal() {
-    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    const currentCart = getCart();
+    return currentCart.reduce((total, item) => total + (item.price * item.quantity), 0);
 }
 
 // Inicializar cuando se carga la página
 document.addEventListener('DOMContentLoaded', function() {
     displayFeaturedProducts();
-    updateCartCount();
+    // NO llamar updateCartCount() aquí para evitar conflictos
+    // La función de script.js ya se encarga de esto
 });
 
-// Exportar funciones para uso global
-window.addToCart = addToCart;
-window.getCart = getCart;
-window.clearCart = clearCart;
-window.removeFromCart = removeFromCart;
-window.updateCartItemQuantity = updateCartItemQuantity;
-window.getCartTotal = getCartTotal;
+// Exportar funciones para uso global (sin conflictos)
 window.getProductById = getProductById;
 window.searchProducts = searchProducts;
 window.getProductsByCategory = getProductsByCategory;
+window.addToCartFromProducts = addToCartFromProducts;
