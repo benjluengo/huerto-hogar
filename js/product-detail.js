@@ -14,6 +14,9 @@ function loadProductData() {
     const productImage = getUrlParameter('image');
     const productDescription = getUrlParameter('description');
 
+    // Lista de productos que se venden por KG
+    const kgProducts = ['Manzana Fuji', 'Naranjas Valencia', 'Plátanos Cavendish', 'Zanahorias Orgánicas', 'Pimientos Tricolores'];
+
     // Actualizar elementos del DOM con los datos del producto
     if (productName) {
         document.getElementById('productName').textContent = productName;
@@ -21,11 +24,21 @@ function loadProductData() {
     }
 
     if (productPrice) {
-        document.getElementById('productPrice').textContent = '$' + productPrice;
+        let priceText = '$' + productPrice;
+        if (kgProducts.includes(productName)) {
+            priceText += ' KG';
+        }
+        document.getElementById('productPrice').textContent = priceText;
     }
 
     if (productStock) {
-        document.getElementById('productStock').textContent = 'Stock: ' + productStock + ' unidades';
+        let stockText = 'Stock: ' + productStock;
+        if (kgProducts.includes(productName)) {
+            stockText += ' kilos';
+        } else {
+            stockText += ' unidades';
+        }
+        document.getElementById('productStock').textContent = stockText;
     }
 
     if (productImage) {
