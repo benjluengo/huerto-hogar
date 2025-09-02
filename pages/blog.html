@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blog - HUERTO HOGAR</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/about.css" />
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        rel="stylesheet"
+    />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap"
+        rel="stylesheet"
+    />
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="../index.html" class="nav-brand">🥕 Huerto Hogar</a>
+        <ul class="nav-menu">
+            <li><a href="../index.html" class="nav-link">Inicio</a></li>
+            <li><a href="blog.html" class="nav-link active">Blog</a></li>
+            <li><a href="env-impact.html" class="nav-link">Nosotros</a></li>
+            <li><a href="contact.html" class="nav-link">Contacto</a></li>
+            <li><a href="productos.html" class="nav-link">Productos</a></li>
+        </ul>
+        <div class="nav-user">
+            <div class="user-menu">
+                <button class="user-icon" onclick="toggleUserMenu()">
+                    <i class="fa-solid fa-user"></i>
+                </button>
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="login.html" class="dropdown-item">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                    </a>
+                    <a href="register.html" class="dropdown-item">
+                        <i class="fas fa-user-plus"></i> Registrarse
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="products-section">
+        <div class="container">
+            <h1 class="section-title">Blog - Alimentación Saludable y Sostenibilidad</h1>
+            <div class="blog-posts-grid">
+                <article class="blog-post">
+                    <h2 class="blog-post-title">Beneficios de una Alimentación Orgánica</h2>
+                    <p>
+                        Consumir productos orgánicos ayuda a reducir la exposición a pesticidas y promueve un
+                        estilo de vida más saludable. Además, apoya prácticas agrícolas sostenibles que protegen
+                        el medio ambiente.
+                    </p>
+                    <a href="#" class="btn-secondary">Leer más</a>
+                </article>
+
+                <article class="blog-post">
+                    <h2 class="blog-post-title">Cómo Reducir el Desperdicio de Alimentos</h2>
+                    <p>
+                        Aprende técnicas para minimizar el desperdicio de alimentos en casa, desde la planificación
+                        de comidas hasta el almacenamiento adecuado, contribuyendo a un planeta más sostenible.
+                    </p>
+                    <a href="#" class="btn-secondary">Leer más</a>
+                </article>
+
+                <article class="blog-post">
+                    <h2 class="blog-post-title">La Importancia de Apoyar a Agricultores Locales</h2>
+                    <p>
+                        Descubre cómo comprar productos locales fortalece la economía regional y reduce la huella
+                        de carbono asociada al transporte de alimentos.
+                    </p>
+                    <a href="#" class="btn-secondary">Leer más</a>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Huerto Hogar</h3>
+                    <p>Conectando el campo con tu mesa. Productos frescos y orgánicos directamente del productor.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="env-impact.html">Nosotros</a></li>
+                        <li><a href="productos.html">Productos</a></li>
+                        <li><a href="contact.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p><i class="fas fa-phone"></i> +56 9 1234 5678</p>
+                    <p><i class="fas fa-envelope"></i> info@huertohogar.cl</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Santiago, Chile</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Huerto Hogar. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+
+</html>
