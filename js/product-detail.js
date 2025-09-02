@@ -21,7 +21,13 @@ function loadProductData() {
     }
 
     if (productPrice) {
-        document.getElementById('productPrice').textContent = '$' + productPrice;
+        let priceText = '$' + productPrice;
+        // Agregar "KG" para productos específicos
+        const keywords = ['Manzana', 'Zanahoria', 'Plátano', 'Pimiento', 'Naranja'];
+        if (keywords.some(keyword => productName.includes(keyword))) {
+            priceText += ' KG';
+        }
+        document.getElementById('productPrice').textContent = priceText;
     }
 
     if (productStock) {
@@ -116,8 +122,41 @@ function updateCartCount() {
     }
 }
 
+// Función para cargar productos recomendados
+function loadRecommendedProducts() {
+    const currentProductName = getUrlParameter('name');
+    const recommendedProductsContainer = document.getElementById('recommendedProducts');
+
+    if (!recommendedProductsContainer || !window.products) return;
+
+    // Filtrar productos recomendados (excluir el producto actual y limitar a 4)
+    const recommendedProducts = window.products
+        .filter(product => product.name !== currentProductName)
+        .slice(0, 4);
+
+    // Generar HTML para productos recomendados
+    const recommendedHTML = recommendedProducts.map(product => {
+        let priceText = '$' + product.price.toLocaleString();
+        const keywords = ['Manzana', 'Zanahoria', 'Plátano', 'Pimiento', 'Naranja'];
+        if (keywords.some(keyword => product.name.includes(keyword))) {
+            priceText += ' KG';
+        }
+        return `
+        <a href="product-detail.html?name=${encodeURIComponent(product.name)}&price=${product.price}&stock=${product.stock}&image=${encodeURIComponent(product.image)}&description=${encodeURIComponent(product.name + ' - Producto fresco y de calidad.')}" class="recommended-product-card">
+            <img src="${product.image}" alt="${product.name}" class="recommended-product-image">
+            <div class="recommended-product-info">
+                <h4>${product.name}</h4>
+                <p>${priceText}</p>
+            </div>
+        </a>
+    `}).join('');
+
+    recommendedProductsContainer.innerHTML = recommendedHTML;
+}
+
 // Inicializar cuando se carga la página
 document.addEventListener('DOMContentLoaded', function() {
     loadProductData();
+    loadRecommendedProducts();
     updateCartCount();
 });

@@ -1,11 +1,20 @@
-# Shopping Cart Implementation
+# TODO: Modificar página de detalle de productos
 
-## Tasks
-- [x] Create pages/cart.html with consistent navbar and layout
-- [x] Create pages/purchase-success.html for successful purchase confirmation
-- [x] Create js/cart.js for cart page functionality (display items, update quantities, remove items, calculate total)
-- [x] Update js/products.js to ensure consistent cart item structure (use 'id' instead of 'name' for identification)
-- [x] Update js/product-detail.js to use consistent cart structure
-- [x] Update navigation in all pages to include cart link consistently
-- [x] Test cart functionality: add items, view cart, update quantities, remove items, calculate total
-- [x] Test purchase flow and success page
+## Tareas Pendientes
+- [x] Actualizar js/product-detail.js para agregar "por kilogramo" al precio de productos específicos (manzanas, naranjas, platanos, zanahorias, pimientos)
+- [x] Agregar sección de productos recomendados en pages/product-detail.html
+- [x] Implementar lógica en js/product-detail.js para mostrar productos recomendados con enlaces
+- [x] Actualizar css/style.css para estilizar el cuadro de recomendaciones
+- [x] Verificar funcionamiento en productos específicos
+- [x] Agregar estilos responsivos para la sección de productos recomendados
+
+## Productos Específicos
+- Manzanas Rojas (id: 3)
+- Zanahorias (id: 4)
+- Naranjas Dulces (id: 6)
+- Platanos (no encontrado en lista actual)
+- Pimientos (no encontrado en lista actual)
+
+## Notas
+- Usar el mismo formato CSS existente
+- Recomendaciones: mostrar otros productos con imagen y enlace a su detalle

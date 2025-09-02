@@ -61,18 +61,24 @@ function displayFeaturedProducts() {
     // Mostrar solo los primeros 6 productos
     const featuredProducts = products.slice(0, 6);
 
-    productsGrid.innerHTML = featuredProducts.map(product => `
+    productsGrid.innerHTML = featuredProducts.map(product => {
+        let priceText = '$' + product.price.toLocaleString();
+        const keywords = ['Manzana', 'Zanahoria', 'Plátano', 'Pimiento', 'Naranja'];
+        if (keywords.some(keyword => product.name.includes(keyword))) {
+            priceText += ' KG';
+        }
+        return `
         <div class="product-card">
             <img src="${product.image}" alt="${product.name}" class="product-image">
             <div class="product-info">
                 <div class="product-name">${product.name}</div>
-                <div class="product-price">$${product.price.toLocaleString()}</div>
+                <div class="product-price">${priceText}</div>
                 <button class="btn-secondary" onclick="addToCart(${product.id})">
                     <i class="fas fa-cart-plus"></i> Agregar al Carrito
                 </button>
             </div>
         </div>
-    `).join('');
+    `}).join('');
 }
 
 // Función para agregar producto al carrito
