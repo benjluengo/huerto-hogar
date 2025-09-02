@@ -1,0 +1,219 @@
+/* About Page Styles */
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.about-text {
+    padding: 2rem;
+}
+
+.about-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #2E8B57;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.about-text p {
+    font-size: 1.1rem;
+    color: #555555;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.about-image {
+    text-align: center;
+}
+
+.about-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Mission and Vision Cards */
+.mission-card, .vision-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+}
+
+.mission-content, .vision-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.mission-icon, .vision-icon {
+    font-size: 3rem;
+    color: #2E8B57;
+    margin-bottom: 1.5rem;
+}
+
+.mission-content h3, .vision-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #2E8B57;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.mission-content p, .vision-content p {
+    font-size: 1.1rem;
+    color: #555555;
+    line-height: 1.7;
+}
+
+/* Environmental Impact Grid */
+.impact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.impact-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    transition: transform 0.3s ease;
+}
+
+.impact-card:hover {
+    transform: translateY(-5px);
+}
+
+.impact-icon {
+    font-size: 2.5rem;
+    color: #2E8B57;
+    margin-bottom: 1rem;
+}
+
+.impact-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: #2E8B57;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.impact-card p {
+    font-size: 1rem;
+    color: #666666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.impact-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(46, 139, 87, 0.1);
+    border-radius: 10px;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2E8B57;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #666666;
+    font-weight: 600;
+}
+
+/* Developers Section */
+.developers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.developer-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+}
+
+.developer-avatar {
+    width: 80px;
+    height: 80px;
+    background: #2E8B57;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 2rem;
+    color: white;
+}
+
+.developer-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: #2E8B57;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.developer-card p {
+    font-size: 1rem;
+    color: #666666;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+
+.developer-card strong {
+    color: #333333;
+}
+
+/* Responsive Design for About Page */
+@media (max-width: 768px) {
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .about-text {
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .about-text h2 {
+        font-size: 2rem;
+    }
+
+    .mission-card, .vision-card {
+        padding: 2rem;
+    }
+
+    .mission-content h3, .vision-content h3 {
+        font-size: 1.5rem;
+    }
+
+    .impact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .developers-grid {
+        grid-template-columns: 1fr;
+    }
+}

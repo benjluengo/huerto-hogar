@@ -63,10 +63,11 @@ function increaseQuantity() {
     }
 }
 
-// Función para agregar al carrito
+// Función para agregar al carrito (corregida para usar la función unificada)
 function addToCart() {
     const productName = getUrlParameter('name');
-    const productPrice = parseInt(getUrlParameter('price'));
+    const productPrice = getUrlParameter('price');
+    const productImage = getUrlParameter('image');
     const quantity = parseInt(document.getElementById('quantity').value);
 
     if (!productName || !productPrice) {
@@ -74,89 +75,93 @@ function addToCart() {
         return;
     }
 
-    // Obtener carrito actual del localStorage
-    let cart = JSON.parse(localStorage.getItem('huertohogar_cart') || '[]');
-
-    // Buscar el producto en la lista de productos para obtener el ID correcto
-    // Nota: Esto asume que js/products.js está cargado en la página
-    const product = window.products ? window.products.find(p => p.name === productName) : null;
-    const productId = product ? product.id : Date.now(); // Usar timestamp como fallback si no se encuentra
-
-    // Verificar si el producto ya está en el carrito
-    const existingProductIndex = cart.findIndex(item => item.id === productId);
-
-    if (existingProductIndex > -1) {
-        // Actualizar cantidad si ya existe
-        cart[existingProductIndex].quantity += quantity;
+    // Usar la función unificada de script.js
+    if (typeof addProductToCart === 'function') {
+        addProductToCart(productName, parseInt(productPrice), quantity, productImage);
+        
+        // Mostrar confirmación
+        alert(`¡${quantity} ${productName} agregado(s) al carrito!`);
     } else {
-        // Agregar nuevo producto al carrito
-        cart.push({
-            id: productId,
-            name: productName,
-            price: productPrice,
-            quantity: quantity,
-            image: getUrlParameter('image')
-        });
-    }
+        // Fallback en caso de que script.js no esté cargado
+        console.warn('addProductToCart no disponible, usando método alternativo');
+        
+        // Obtener carrito actual del localStorage
+        let cart = JSON.parse(localStorage.getItem('huertohogar_cart') || '[]');
 
-    // Guardar carrito actualizado
-    localStorage.setItem('huertohogar_cart', JSON.stringify(cart));
+        // Verificar si el producto ya está en el carrito
+        const existingProductIndex = cart.findIndex(item => item.name === productName);
 
-    // Mostrar confirmación
-    alert(`¡${quantity} ${productName} agregado(s) al carrito!`);
-
-    // Actualizar contador del carrito en la navbar si existe
-    updateCartCount();
-}
-
-// Función para actualizar el contador del carrito
-function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem('huertohogar_cart') || '[]');
-    const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-
-    // Buscar elemento del contador del carrito
-    let cartCountElement = document.getElementById('cart-count');
-    if (cartCountElement) {
-        cartCountElement.textContent = totalItems;
-        cartCountElement.style.display = totalItems > 0 ? 'block' : 'none';
-    }
-}
-
-// Función para cargar productos recomendados
-function loadRecommendedProducts() {
-    const currentProductName = getUrlParameter('name');
-    const recommendedProductsContainer = document.getElementById('recommendedProducts');
-
-    if (!recommendedProductsContainer || !window.products) return;
-
-    // Filtrar productos recomendados (excluir el producto actual y limitar a 4)
-    const recommendedProducts = window.products
-        .filter(product => product.name !== currentProductName)
-        .slice(0, 4);
-
-    // Generar HTML para productos recomendados
-    const recommendedHTML = recommendedProducts.map(product => {
-        let priceText = '$' + product.price.toLocaleString();
-        const keywords = ['Manzana', 'Zanahoria', 'Plátano', 'Pimiento', 'Naranja'];
-        if (keywords.some(keyword => product.name.includes(keyword))) {
-            priceText += ' KG';
+        if (existingProductIndex > -1) {
+            // Actualizar cantidad si ya existe
+            cart[existingProductIndex].quantity += quantity;
+        } else {
+            // Agregar nuevo producto al carrito
+            cart.push({
+                name: productName,
+                price: parseInt(productPrice),
+                quantity: quantity,
+                image: productImage
+            });
         }
-        return `
-        <a href="product-detail.html?name=${encodeURIComponent(product.name)}&price=${product.price}&stock=${product.stock}&image=${encodeURIComponent(product.image)}&description=${encodeURIComponent(product.name + ' - Producto fresco y de calidad.')}" class="recommended-product-card">
-            <img src="${product.image}" alt="${product.name}" class="recommended-product-image">
-            <div class="recommended-product-info">
-                <h4>${product.name}</h4>
-                <p>${priceText}</p>
-            </div>
-        </a>
-    `}).join('');
 
-    recommendedProductsContainer.innerHTML = recommendedHTML;
+        // Guardar carrito actualizado
+        localStorage.setItem('huertohogar_cart', JSON.stringify(cart));
+
+        // Mostrar confirmación
+        alert(`¡${quantity} ${productName} agregado(s) al carrito!`);
+
+        // Actualizar contador del carrito si la función existe
+        if (typeof updateCartCount === 'function') {
+            updateCartCount();
+        }
+    }
+}
+
+// Función para mostrar notificación personalizada (opcional)
+function showProductNotification(message, type = 'success') {
+    // Si existe la función de notificaciones global, usarla
+    if (typeof showNotification === 'function') {
+        showNotification(message, type);
+        return;
+    }
+
+    // Crear notificación simple como fallback
+    const notification = document.createElement('div');
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#28a745' : '#dc3545'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 1001;
+        font-weight: 500;
+    `;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+        }
+    }, 3000);
 }
 
 // Inicializar cuando se carga la página
 document.addEventListener('DOMContentLoaded', function() {
     loadProductData();
-    loadRecommendedProducts();
-    updateCartCount();
+    
+    // Actualizar contador del carrito si la función existe
+    if (typeof updateCartCount === 'function') {
+        updateCartCount();
+    }
 });
+
+// Exportar funciones para uso global
+window.loadProductData = loadProductData;
+window.addToCart = addToCart;
+window.increaseQuantity = increaseQuantity;
+window.decreaseQuantity = decreaseQuantity;
