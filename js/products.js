@@ -1,51 +1,66 @@
 let products = JSON.parse(localStorage.getItem('huertohogar_products')) || [
     {
         id: 1,
-        name: "Tomates Orgánicos",
-        price: 4500,
-        image: "https://images.unsplash.com/photo-1546470427-e9b3ba2e4c1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-        category: "Verduras",
-        stock: 50
+        name: "Manzana Fuji",
+        price: 1200,
+        image: "https://laveguitadengo.cl/wp-content/uploads/2022/04/manzanafuji.jpg",
+        category: "Frutas",
+        stock: 150,
+        description: "Manzanas Fuji crujientes y dulces, cultivadas en el Valle del Maule."
     },
     {
         id: 2,
-        name: "Lechuga Fresca",
-        price: 2500,
-        image: "https://images.unsplash.com/photo-1556801712-76c8eb07bbc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-        category: "Verduras",
-        stock: 30
+        name: "Naranjas Valencia",
+        price: 1000,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIHgoNtFN0RdqBpFCBWh0MXX_J29OwOvCE7Q&s",
+        category: "Frutas",
+        stock: 200,
+        description: "Jugosas y ricas en vitamina C, estas naranjas Valencia son ideales para zumos frescos y refrescantes."
     },
     {
         id: 3,
-        name: "Manzanas Rojas",
-        price: 3800,
-        image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        name: "Plátanos Cavendish",
+        price: 800,
+        image: "https://buyfromcostarica.com/wp-content/uploads/2023/06/elle_s_produce_exports_banano_cavendich_producto_principal.jpg",
         category: "Frutas",
-        stock: 40
+        stock: 250,
+        description: "Plátanos maduros y dulces, perfectos para el desayuno o como snack energético."
     },
     {
         id: 4,
-        name: "Zanahorias",
-        price: 2200,
-        image: "https://images.unsplash.com/photo-1582515073490-39981397c445?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        name: "Zanahorias Orgánicas",
+        price: 900,
+        image: "https://santaisabel.vtexassets.com/arquivos/ids/418554-178-178?width=178&height=178&aspect=true",
         category: "Verduras",
-        stock: 60
+        stock: 100,
+        description: "Zanahorias crujientes cultivadas sin pesticidas en la Región de O'Higgins."
     },
     {
         id: 5,
-        name: "Papas Frescas",
-        price: 3200,
-        image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        name: "Espinacas Frescas",
+        price: 700,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR299qkD4-0g7fbT0o3oPdlRatzmW2Pq5PgtA&s",
         category: "Verduras",
-        stock: 45
+        stock: 80,
+        description: "Espinacas frescas y nutritivas, perfectas para ensaladas y batidos verdes."
     },
     {
         id: 6,
-        name: "Naranjas Dulces",
-        price: 2800,
-        image: "https://images.unsplash.com/photo-1557800636-894a64c1696f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-        category: "Frutas",
-        stock: 35
+        name: "Pimientos Tricolores",
+        price: 1500,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXmHdKP02aI3IbLAaOtOYc-OwSeOXD0jxJ8A&s",
+        category: "Verduras",
+        stock: 120,
+        description: "Pimientos rojos, amarillos y verdes, ideales para salteados y platos coloridos."
+    },
+    {
+        id: 7,
+        name: "Miel Organica",
+        price: 5000,
+        image: "https://santiagonativo.cl/cdn/shop/files/pure_honey_largeok_grande.webp?v=1730667525",
+        category: "Otros",
+        stock: 50,
+        description: "Miel pura y organica producida por apicultores locales."
     }
 ];
 

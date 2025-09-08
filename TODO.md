@@ -1,20 +1,18 @@
-# TODO: Modificar página de detalle de productos
+# TODO: Implementar productos dinámicos en páginas/productos.html
 
-## Tareas Pendientes
-- [x] Actualizar js/product-detail.js para agregar "por kilogramo" al precio de productos específicos (manzanas, naranjas, platanos, zanahorias, pimientos)
-- [x] Agregar sección de productos recomendados en pages/product-detail.html
-- [x] Implementar lógica en js/product-detail.js para mostrar productos recomendados con enlaces
-- [x] Actualizar css/style.css para estilizar el cuadro de recomendaciones
-- [x] Verificar funcionamiento en productos específicos
-- [x] Agregar estilos responsivos para la sección de productos recomendados
+## Tareas Completadas:
+- [x] Actualizar js/products.js para incluir productos estáticos con IDs y descripciones
+- [x] Modificar pages/productos.html para usar grid dinámico (cambiar clase a id productsGrid)
+- [x] Remover productos estáticos del HTML en pages/productos.html
+- [x] Agregar script js/products.js a pages/productos.html
+- [x] Asegurar que productos agregados en admin aparezcan en productos.html (usando localStorage compartido)
 
-## Productos Específicos
-- Manzanas Rojas (id: 3)
-- Zanahorias (id: 4)
-- Naranjas Dulces (id: 6)
-- Platanos (no encontrado en lista actual)
-- Pimientos (no encontrado en lista actual)
+## Información Recopilada:
+- Admin dashboard usa localStorage 'huertohogar_products' para almacenar productos
+- js/products.js ya tiene lógica para cargar productos desde localStorage
+- pages/productos.html ahora carga productos dinámicamente desde localStorage
+- Productos agregados/eliminados en admin se reflejan automáticamente en productos.html
 
-## Notas
-- Usar el mismo formato CSS existente
-- Recomendaciones: mostrar otros productos con imagen y enlace a su detalle
+## Próximos Pasos:
+- [ ] Probar funcionalidad: Agregar producto en admin y verificar que aparezca en productos.html
+- [ ] Probar eliminación de producto en admin y verificar que desaparezca en productos.html

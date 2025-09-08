@@ -209,6 +209,10 @@
                         <label for="productImage">URL Imagen</label>
                         <input type="url" id="productImage" required />
                     </div>
+                    <div class="form-group">
+                        <label for="productDescription">Descripción</label>
+                        <textarea id="productDescription" rows="3" required></textarea>
+                    </div>
                     <div class="form-actions">
                         <button type="submit" id="saveProductBtn">Guardar</button>
                         <button type="button" id="cancelProductBtn">Cancelar</button>
@@ -310,7 +314,71 @@
         });
 
         // Variables para productos y usuarios
-        let products = JSON.parse(localStorage.getItem('huertohogar_products')) || [];
+        let products = JSON.parse(localStorage.getItem('huertohogar_products')) || [
+            {
+                id: 1,
+                name: "Manzana Fuji",
+                price: 1200,
+                image: "https://laveguitadengo.cl/wp-content/uploads/2022/04/manzanafuji.jpg",
+                category: "Frutas",
+                stock: 150,
+                description: "Manzanas Fuji crujientes y dulces, cultivadas en el Valle del Maule."
+            },
+            {
+                id: 2,
+                name: "Naranjas Valencia",
+                price: 1000,
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIHgoNtFN0RdqBpFCBWh0MXX_J29OwOvCE7Q&s",
+                category: "Frutas",
+                stock: 200,
+                description: "Jugosas y ricas en vitamina C, estas naranjas Valencia son ideales para zumos frescos y refrescantes."
+            },
+            {
+                id: 3,
+                name: "Plátanos Cavendish",
+                price: 800,
+                image: "https://buyfromcostarica.com/wp-content/uploads/2023/06/elle_s_produce_exports_banano_cavendich_producto_principal.jpg",
+                category: "Frutas",
+                stock: 250,
+                description: "Plátanos maduros y dulces, perfectos para el desayuno o como snack energético."
+            },
+            {
+                id: 4,
+                name: "Zanahorias Orgánicas",
+                price: 900,
+                image: "https://santaisabel.vtexassets.com/arquivos/ids/418554-178-178?width=178&height=178&aspect=true",
+                category: "Verduras",
+                stock: 100,
+                description: "Zanahorias crujientes cultivadas sin pesticidas en la Región de O'Higgins."
+            },
+            {
+                id: 5,
+                name: "Espinacas Frescas",
+                price: 700,
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR299qkD4-0g7fbT0o3oPdlRatzmW2Pq5PgtA&s",
+                category: "Verduras",
+                stock: 80,
+                description: "Espinacas frescas y nutritivas, perfectas para ensaladas y batidos verdes."
+            },
+            {
+                id: 6,
+                name: "Pimientos Tricolores",
+                price: 1500,
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXmHdKP02aI3IbLAaOtOYc-OwSeOXD0jxJ8A&s",
+                category: "Verduras",
+                stock: 120,
+                description: "Pimientos rojos, amarillos y verdes, ideales para salteados y platos coloridos."
+            },
+            {
+                id: 7,
+                name: "Miel Organica",
+                price: 5000,
+                image: "https://santiagonativo.cl/cdn/shop/files/pure_honey_largeok_grande.webp?v=1730667525",
+                category: "Otros",
+                stock: 50,
+                description: "Miel pura y organica producida por apicultores locales."
+            }
+        ];
         let users = JSON.parse(localStorage.getItem('huertohogar_users')) || [];
 
         // Elementos productos
@@ -430,8 +498,9 @@
             const category = productCategoryInput.value.trim();
             const stock = parseInt(productStockInput.value);
             const image = productImageInput.value.trim();
+            const description = document.getElementById('productDescription').value.trim();
 
-            if (!name || isNaN(price) || !category || isNaN(stock) || !image) {
+            if (!name || isNaN(price) || !category || isNaN(stock) || !image || !description) {
                 alert('Por favor, complete todos los campos correctamente.');
                 return;
             }
@@ -444,7 +513,8 @@
                     price,
                     category,
                     stock,
-                    image
+                    image,
+                    description
                 };
                 products.push(newProduct);
             } else {
@@ -456,6 +526,7 @@
                     product.category = category;
                     product.stock = stock;
                     product.image = image;
+                    product.description = description;
                 }
             }
 
