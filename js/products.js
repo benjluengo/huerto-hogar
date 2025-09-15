@@ -157,10 +157,152 @@ function displayAllProducts() {
     `).join('');
 }
 
+// Función para filtrar productos según criterios
+function filterProducts() {
+    const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
+    const categoryFilter = document.getElementById('categoryFilter').value;
+    const priceFilter = document.getElementById('priceFilter').value;
+    const stockFilter = document.getElementById('stockFilter').value;
+    const sortFilter = document.getElementById('sortFilter').value;
+
+    let filtered = products;
+
+    // Filtrar por búsqueda
+    if (searchInput) {
+        filtered = filtered.filter(product =>
+            product.name.toLowerCase().includes(searchInput) ||
+            product.category.toLowerCase().includes(searchInput) ||
+            (product.description && product.description.toLowerCase().includes(searchInput))
+        );
+    }
+
+    // Filtrar por categoría
+    if (categoryFilter) {
+        filtered = filtered.filter(product => product.category === categoryFilter);
+    }
+
+    // Filtrar por rango de precio
+    if (priceFilter) {
+        if (priceFilter === '5000+') {
+            filtered = filtered.filter(product => product.price >= 5000);
+        } else {
+            const [min, max] = priceFilter.split('-').map(Number);
+            filtered = filtered.filter(product => product.price >= min && product.price <= max);
+        }
+    }
+
+    // Filtrar por stock
+    if (stockFilter) {
+        if (stockFilter === 'available') {
+            filtered = filtered.filter(product => product.stock > 0);
+        } else if (stockFilter === 'low-stock') {
+            filtered = filtered.filter(product => product.stock > 0 && product.stock < 50);
+        }
+    }
+
+    // Ordenar
+    if (sortFilter) {
+        switch (sortFilter) {
+            case 'name-asc':
+                filtered.sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case 'name-desc':
+                filtered.sort((a, b) => b.name.localeCompare(a.name));
+                break;
+            case 'price-asc':
+                filtered.sort((a, b) => a.price - b.price);
+                break;
+            case 'price-desc':
+                filtered.sort((a, b) => b.price - a.price);
+                break;
+            case 'stock-desc':
+                filtered.sort((a, b) => b.stock - a.stock);
+                break;
+        }
+    }
+
+    // Mostrar resultados
+    const productsGrid = document.getElementById('productsGrid');
+    const noResults = document.getElementById('noResults');
+    const resultsCount = document.getElementById('resultsCount');
+
+    if (filtered.length === 0) {
+        productsGrid.style.display = 'none';
+        noResults.style.display = 'block';
+        resultsCount.innerHTML = 'Mostrando <strong>0</strong> productos';
+    } else {
+        productsGrid.style.display = 'grid';
+        noResults.style.display = 'none';
+        resultsCount.innerHTML = `Mostrando <strong>${filtered.length}</strong> productos`;
+
+        productsGrid.innerHTML = filtered.map(product => `
+            <a href="product-detail.html?name=${encodeURIComponent(product.name)}&price=${product.price}&stock=${product.stock}&image=${encodeURIComponent(product.image)}&description=${encodeURIComponent(product.description || '')}&origin=${encodeURIComponent(product.origin || '')}&sustainablePractices=${encodeURIComponent(product.sustainablePractices || '')}&suggestedRecipes=${encodeURIComponent((product.suggestedRecipes || []).join('|'))}" class="product-card">
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">${product.name}</h3>
+                    <p class="product-price">$${product.price.toLocaleString()} KG</p>
+                    <p class="product-stock">Stock: ${product.stock} kilos</p>
+                    <p class="product-description">${product.description || ''}</p>
+                    <button class="btn-secondary" onclick="event.preventDefault(); addToCartFromProducts(${product.id});">
+                        <i class="fas fa-cart-plus"></i> Agregar al Carrito
+                    </button>
+                </div>
+            </a>
+        `).join('');
+    }
+}
+
 // Inicializar cuando se carga la página
 document.addEventListener('DOMContentLoaded', function() {
     displayFeaturedProducts();
     displayAllProducts();
+
+    // Setup event listeners for search and filters
+    const searchInput = document.getElementById('searchInput');
+    const clearSearch = document.getElementById('clearSearch');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const priceFilter = document.getElementById('priceFilter');
+    const stockFilter = document.getElementById('stockFilter');
+    const sortFilter = document.getElementById('sortFilter');
+    const clearFilters = document.getElementById('clearFilters');
+    const resetSearch = document.getElementById('resetSearch');
+
+    function onFilterChange() {
+        filterProducts();
+        clearSearch.style.display = searchInput.value ? 'inline' : 'none';
+    }
+
+    searchInput.addEventListener('input', onFilterChange);
+    clearSearch.addEventListener('click', () => {
+        searchInput.value = '';
+        onFilterChange();
+    });
+    categoryFilter.addEventListener('change', onFilterChange);
+    priceFilter.addEventListener('change', onFilterChange);
+    stockFilter.addEventListener('change', onFilterChange);
+    sortFilter.addEventListener('change', onFilterChange);
+    clearFilters.addEventListener('click', () => {
+        categoryFilter.value = '';
+        priceFilter.value = '';
+        stockFilter.value = '';
+        sortFilter.value = 'name-asc';
+        searchInput.value = '';
+        onFilterChange();
+    });
+    resetSearch.addEventListener('click', () => {
+        categoryFilter.value = '';
+        priceFilter.value = '';
+        stockFilter.value = '';
+        sortFilter.value = 'name-asc';
+        searchInput.value = '';
+        onFilterChange();
+    });
+
+    // Initial filter to show all products sorted by name ascending
+    sortFilter.value = 'name-asc';
+    filterProducts();
 });
 
 // Función para agregar producto al carrito (renombrada para evitar conflictos)

@@ -51,7 +51,80 @@
         <section class="products-section">
             <div class="container">
                 <h2 class="section-title">Nuestros Productos</h2>
+
+                <!-- Advanced Search and Filters -->
+                <div class="search-filters-container">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Buscar productos..." class="search-input">
+                        <button id="clearSearch" class="clear-search-btn" style="display: none;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div class="filters-row">
+                        <div class="filter-group">
+                            <label for="categoryFilter">Categoría:</label>
+                            <select id="categoryFilter" class="filter-select">
+                                <option value="">Todas las categorías</option>
+                                <option value="Frutas">Frutas</option>
+                                <option value="Verduras">Verduras</option>
+                                <option value="Productos Organicos">Productos Orgánicos</option>
+                                <option value="Productos Lacteos">Productos Lácteos</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="priceFilter">Rango de precio:</label>
+                            <select id="priceFilter" class="filter-select">
+                                <option value="">Todos los precios</option>
+                                <option value="0-1000">$0 - $1.000</option>
+                                <option value="1000-2000">$1.000 - $2.000</option>
+                                <option value="2000-5000">$2.000 - $5.000</option>
+                                <option value="5000+">$5.000+</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="stockFilter">Disponibilidad:</label>
+                            <select id="stockFilter" class="filter-select">
+                                <option value="">Todos</option>
+                                <option value="available">En stock</option>
+                                <option value="low-stock">Stock bajo (menos de 50)</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="sortFilter">Ordenar por:</label>
+                            <select id="sortFilter" class="filter-select">
+                                <option value="name-asc">Nombre (A-Z)</option>
+                                <option value="name-desc">Nombre (Z-A)</option>
+                                <option value="price-asc">Precio (menor a mayor)</option>
+                                <option value="price-desc">Precio (mayor a menor)</option>
+                                <option value="stock-desc">Stock (mayor a menor)</option>
+                            </select>
+                        </div>
+
+                        <button id="clearFilters" class="btn-secondary clear-filters-btn">
+                            <i class="fas fa-eraser"></i> Limpiar filtros
+                        </button>
+                    </div>
+
+                    <div class="search-results-info">
+                        <span id="resultsCount">Mostrando <strong>9</strong> productos</span>
+                    </div>
+                </div>
+
                 <div id="productsGrid" class="product-grid">
+                </div>
+
+                <div id="noResults" class="no-results" style="display: none;">
+                    <div class="no-results-content">
+                        <i class="fas fa-search" style="font-size: 48px; color: #ccc; margin-bottom: 16px;"></i>
+                        <h3>No se encontraron productos</h3>
+                        <p>Intenta ajustar tus filtros de búsqueda o busca con otros términos.</p>
+                        <button id="resetSearch" class="btn-primary">Mostrar todos los productos</button>
+                    </div>
                 </div>
             </div>
         </section>
