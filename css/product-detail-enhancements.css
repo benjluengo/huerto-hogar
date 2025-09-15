@@ -1,0 +1,25 @@
+.product-origin, .product-sustainable, .product-recipes {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #f0f8f5;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.product-origin h3,
+.product-sustainable h3,
+.product-recipes h3 {
+    margin-bottom: 0.5rem;
+    color: #2f855a;
+    font-weight: 600;
+}
+
+.product-recipes ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin: 0;
+}
+
+.product-recipes li {
+    margin-bottom: 0.3rem;
+}

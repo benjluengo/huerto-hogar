@@ -3,64 +3,109 @@ let products = JSON.parse(localStorage.getItem('huertohogar_products')) || [
         id: 1,
         name: "Manzana Fuji",
         price: 1200,
-        image: "https://laveguitadengo.cl/wp-content/uploads/2022/04/manzanafuji.jpg",
+        image: "../images/manzana-fuji.jpg",
         category: "Frutas",
         stock: 150,
-        description: "Manzanas Fuji crujientes y dulces, cultivadas en el Valle del Maule."
+        description: "Manzanas Fuji crujientes y dulces, cultivadas en el Valle del Maule.",
+        origin: "Valle del Maule, Chile",
+        sustainablePractices: "Certificado orgánico, riego eficiente",
+        suggestedRecipes: ["Ensalada de manzana", "Tarta de manzana"]
     },
     {
         id: 2,
         name: "Naranjas Valencia",
         price: 1000,
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIHgoNtFN0RdqBpFCBWh0MXX_J29OwOvCE7Q&s",
+        image: "../images/naranja-valencia.jpg",
         category: "Frutas",
         stock: 200,
-        description: "Jugosas y ricas en vitamina C, estas naranjas Valencia son ideales para zumos frescos y refrescantes."
+        description: "Jugosas y ricas en vitamina C, estas naranjas Valencia son ideales para zumos frescos y refrescantes.",
+        origin: "Región de O'Higgins, Chile",
+        sustainablePractices: "Agricultura sostenible, sin pesticidas",
+        suggestedRecipes: ["Zumo de naranja", "Ensalada cítrica"]
     },
     {
         id: 3,
         name: "Plátanos Cavendish",
         price: 800,
-        image: "https://buyfromcostarica.com/wp-content/uploads/2023/06/elle_s_produce_exports_banano_cavendich_producto_principal.jpg",
+        image: "../images/platano-cavendish.jpg",
         category: "Frutas",
         stock: 250,
-        description: "Plátanos maduros y dulces, perfectos para el desayuno o como snack energético."
+        description: "Plátanos maduros y dulces, perfectos para el desayuno o como snack energético.",
+        origin: "Costa Central, Chile",
+        sustainablePractices: "Cultivo orgánico",
+        suggestedRecipes: ["Plátano con miel", "Batido de plátano"]
     },
     {
         id: 4,
         name: "Zanahorias Orgánicas",
         price: 900,
-        image: "https://santaisabel.vtexassets.com/arquivos/ids/418554-178-178?width=178&height=178&aspect=true",
+        image: "../images/zanahoria-organica.jpg",
         category: "Verduras",
         stock: 100,
-        description: "Zanahorias crujientes cultivadas sin pesticidas en la Región de O'Higgins."
+        description: "Zanahorias crujientes cultivadas sin pesticidas en la Región de O'Higgins.",
+        origin: "Región Metropolitana, Chile",
+        sustainablePractices: "Orgánico certificado",
+        suggestedRecipes: ["Zanahorias glaseadas", "Sopa de zanahoria"]
     },
     {
         id: 5,
         name: "Espinacas Frescas",
         price: 700,
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR299qkD4-0g7fbT0o3oPdlRatzmW2Pq5PgtA&s",
+        image: "../images/espinaca-fresca.jpg",
         category: "Verduras",
         stock: 80,
-        description: "Espinacas frescas y nutritivas, perfectas para ensaladas y batidos verdes."
+        description: "Espinacas frescas y nutritivas, perfectas para ensaladas y batidos verdes.",
+        origin: "Valle Central, Chile",
+        sustainablePractices: "Cultivo hidropónico sostenible",
+        suggestedRecipes: ["Ensalada de espinacas", "Batido verde"]
     },
     {
         id: 6,
         name: "Pimientos Tricolores",
         price: 1500,
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXmHdKP02aI3IbLAaOtOYc-OwSeOXD0jxJ8A&s",
+        image: "../images/pimiento-tricolor.jpg",
         category: "Verduras",
         stock: 120,
-        description: "Pimientos rojos, amarillos y verdes, ideales para salteados y platos coloridos."
+        description: "Pimientos rojos, amarillos y verdes, ideales para salteados y platos coloridos.",
+        origin: "Región del Maule, Chile",
+        sustainablePractices: "Agricultura integrada",
+        suggestedRecipes: ["Pimientos rellenos", "Ensalada de pimientos"]
     },
     {
         id: 7,
         name: "Miel Organica",
         price: 5000,
-        image: "https://santiagonativo.cl/cdn/shop/files/pure_honey_largeok_grande.webp?v=1730667525",
-        category: "Otros",
-        stock: 50,
-        description: "Miel pura y organica producida por apicultores locales."
+        image: "../images/miel-organica.jpg",
+        category: "Productos Organicos",
+        stock: 40,
+        description: "Miel pura y organica producida por apicultores locales.",
+        origin: "Región de Los Lagos, Chile",
+        sustainablePractices: "Apicultura orgánica",
+        suggestedRecipes: ["Té con miel", "Aderezo de miel"]
+    },
+    {
+        id: 8,
+        name: "Quinoa Organica",
+        price: 6000,
+        image: "../images/quinoa-organica.jpg",
+        category: "Productos Organicos",
+        stock: 40,
+        description: "Quinoa 100% orgánica, rica en proteínas, ideal para dietas saludables y libre de gluten. Cultivada sin pesticidas ni químicos.",
+        origin: "Altiplano chileno",
+        sustainablePractices: "Cultivo ancestral sostenible",
+        suggestedRecipes: ["Quinoa con verduras", "Ensalada de quinoa"]
+    },
+    {
+        id: 9,
+        name: "Leche Entera",
+        price: 1100,
+        image: "../images/leche-entera.jpg",
+        category: "Productos Lacteos",
+        stock: 60,
+        description: "Leche entera pasteurizada de alta calidad, fuente natural de calcio y vitaminas. Perfecta para consumo diario.",
+        origin: "Región de Los Lagos, Chile",
+        sustainablePractices: "Ganadería sostenible",
+        suggestedRecipes: ["Café con leche", "Cereal con leche"]
     }
 ];
 
@@ -95,7 +140,7 @@ function displayAllProducts() {
     if (!productsGrid) return;
 
     productsGrid.innerHTML = products.map(product => `
-        <a href="product-detail.html?name=${encodeURIComponent(product.name)}&price=${product.price}&stock=${product.stock}&image=${encodeURIComponent(product.image)}&description=${encodeURIComponent(product.description || '')}" class="product-card">
+        <a href="product-detail.html?name=${encodeURIComponent(product.name)}&price=${product.price}&stock=${product.stock}&image=${encodeURIComponent(product.image)}&description=${encodeURIComponent(product.description || '')}&origin=${encodeURIComponent(product.origin || '')}&sustainablePractices=${encodeURIComponent(product.sustainablePractices || '')}&suggestedRecipes=${encodeURIComponent((product.suggestedRecipes || []).join('|'))}" class="product-card">
             <div class="product-image">
                 <img src="${product.image}" alt="${product.name}">
             </div>

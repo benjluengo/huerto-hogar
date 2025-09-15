@@ -48,7 +48,7 @@ function updateNavbarForUser() {
 
         // Actualizar las opciones del dropdown
         userDropdown.innerHTML = `
-            <a href="pages/user-profile.html" class="dropdown-item">
+            <a href="${getCorrectPath('pages/user-profile.html')}" class="dropdown-item">
                 <i class="fas fa-user"></i> Mi Perfil
             </a>
             <a href="#" class="dropdown-item" onclick="logout()">

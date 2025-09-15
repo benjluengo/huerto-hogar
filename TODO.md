@@ -1,18 +1,22 @@
-# TODO: Implementar productos dinámicos en páginas/productos.html
+# TODO: Add Origin, Sustainable Practices, and Suggested Recipes to Products
 
-## Tareas Completadas:
-- [x] Actualizar js/products.js para incluir productos estáticos con IDs y descripciones
-- [x] Modificar pages/productos.html para usar grid dinámico (cambiar clase a id productsGrid)
-- [x] Remover productos estáticos del HTML en pages/productos.html
-- [x] Agregar script js/products.js a pages/productos.html
-- [x] Asegurar que productos agregados en admin aparezcan en productos.html (usando localStorage compartido)
+## Step 1: Update products array in js/products.js
+- Add `origin`, `sustainablePractices`, and `suggestedRecipes` fields to each product object with sample data.
 
-## Información Recopilada:
-- Admin dashboard usa localStorage 'huertohogar_products' para almacenar productos
-- js/products.js ya tiene lógica para cargar productos desde localStorage
-- pages/productos.html ahora carga productos dinámicamente desde localStorage
-- Productos agregados/eliminados en admin se reflejan automáticamente en productos.html
+## Step 2: Modify displayAllProducts in js/products.js
+- Update the link to product-detail.html to include new fields in query params.
 
-## Próximos Pasos:
-- [ ] Probar funcionalidad: Agregar producto en admin y verificar que aparezca en productos.html
-- [ ] Probar eliminación de producto en admin y verificar que desaparezca en productos.html
+## Step 3: Edit product-detail.html
+- Add HTML sections for "Origen del Producto", "Prácticas Sostenibles", and "Recetas Sugeridas".
+
+## Step 4: Update loadProductData in js/product-detail.js
+- Retrieve new URL params and populate the new sections in the DOM.
+
+## Step 5: Sync PRODUCTS_DATABASE in js/product-detail.js
+- Update PRODUCTS_DATABASE to match the main products array with new fields.
+
+## Step 6: Update createRecommendedProductHTML
+- Include new params in the links for recommended products.
+
+## Step 7: Test the implementation
+- Verify that product detail page displays all new information correctly.

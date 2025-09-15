@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (!userData) {
         // Si no hay usuario logueado, redirigir al login
-        window.location.href = 'login.html';
+        window.location.href = '../pages/login.html';
         return;
     }
 
@@ -80,6 +80,7 @@ function loadPurchaseHistory() {
         const statusText = purchase.status === 'completed' ? 'Completada' : 
                          purchase.status === 'pending' ? 'Pendiente' : 'Enviada';
 
+        // Add reorder button with onclick handler
         return `
             <div class="purchase-card">
                 <div class="purchase-header">
@@ -90,6 +91,9 @@ function loadPurchaseHistory() {
                     <span class="purchase-status ${statusClass}">${statusText}</span>
                 </div>
                 <div class="purchase-total">$${purchase.total.toLocaleString('es-CL')}</div>
+                <button class="btn-primary reorder-btn" onclick="reorderPurchase('${purchase.id}')">
+                    <i class="fas fa-redo"></i> Reordenar
+                </button>
             </div>
         `;
     }).join('');
@@ -147,6 +151,46 @@ function setupMenuNavigation() {
     });
 }
 
+// Función para reordenar una compra previa
+function reorderPurchase(purchaseId) {
+    const purchase = currentUser.purchases.find(p => p.id === purchaseId);
+    if (!purchase) return;
+
+    // Obtener el carrito actual o crear uno nuevo
+    let cart = JSON.parse(localStorage.getItem('huertohogar_cart') || '[]');
+
+    // Agregar cada ítem de la compra al carrito
+    purchase.items.forEach(itemName => {
+        // Buscar producto en la base de productos
+        const product = products.find(p => p.name === itemName);
+        if (!product) return;
+
+        // Verificar si el producto ya está en el carrito
+        const existingIndex = cart.findIndex(c => c.name === product.name);
+        if (existingIndex > -1) {
+            cart[existingIndex].quantity += 1;
+        } else {
+            cart.push({
+                name: product.name,
+                price: product.price,
+                quantity: 1,
+                image: product.image
+            });
+        }
+    });
+
+    // Guardar carrito actualizado
+    localStorage.setItem('huertohogar_cart', JSON.stringify(cart));
+
+    // Actualizar contador del carrito si existe la función
+    if (typeof updateCartCount === 'function') {
+        updateCartCount();
+    }
+
+    // Mostrar notificación
+    showNotification('Compra reordenada y agregada al carrito', 'success');
+}
+
 // Configurar manejadores de formularios
 function setupFormHandlers() {
     const profileForm = document.getElementById('profileForm');
@@ -162,6 +206,49 @@ function setupFormHandlers() {
             input.addEventListener('input', () => clearProfileError(fieldId));
         }
     });
+}
+
+// Función para cargar recomendaciones personalizadas
+function loadPersonalizedRecommendations() {
+    const recommendationsList = document.getElementById('recommendationsList');
+    if (!recommendationsList) return;
+
+    // Obtener productos comprados por el usuario
+    const purchasedProductNames = new Set();
+    if (currentUser.purchases) {
+        currentUser.purchases.forEach(purchase => {
+            purchase.items.forEach(item => purchasedProductNames.add(item));
+        });
+    }
+
+    // Productos populares simulados
+    const popularProducts = ['Tomates Cherry', 'Lechugas Orgánicas', 'Zanahorias', 'Brócoli', 'Espinacas'];
+
+    // Recomendaciones basadas en productos comprados y populares
+    const recommendedProducts = products.filter(product => 
+        !purchasedProductNames.has(product.name) && popularProducts.includes(product.name)
+    );
+
+    if (recommendedProducts.length === 0) {
+        recommendationsList.innerHTML = '<p>No hay recomendaciones disponibles en este momento.</p>';
+        return;
+    }
+
+    // Crear HTML para recomendaciones
+    const recommendationsHTML = recommendedProducts.map(product => `
+        <div class="recommendation-card">
+            <img src="${product.image}" alt="${product.name}" class="recommendation-image">
+            <div class="recommendation-info">
+                <h3>${product.name}</h3>
+                <p>$${product.price.toLocaleString()}</p>
+                <button class="btn-primary" onclick="addProductToCart('${product.name}', ${product.price}, 1, '${product.image}')">
+                    <i class="fas fa-cart-plus"></i> Agregar al Carrito
+                </button>
+            </div>
+        </div>
+    `).join('');
+
+    recommendationsList.innerHTML = recommendationsHTML;
 }
 
 // Toggle modo edición
@@ -193,6 +280,13 @@ function toggleEditMode() {
         clearAllProfileErrors();
     }
 }
+
+// Modificar loadUserProfile para cargar recomendaciones
+const originalLoadUserProfile = loadUserProfile;
+loadUserProfile = function() {
+    originalLoadUserProfile();
+    loadPersonalizedRecommendations();
+};
 
 // Cancelar edición
 function cancelEdit() {

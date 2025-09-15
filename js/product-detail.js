@@ -6,71 +6,106 @@ function getUrlParameter(name) {
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
 
-// Base de datos de productos para recomendaciones
+// Base de datos de productos para recomendaciones (sincronizada con products.js)
 const PRODUCTS_DATABASE = [
     {
         name: 'Manzana Fuji',
-        price: 2500,
-        stock: 50,
+        price: 1200,
+        stock: 150,
         image: '../images/manzana-fuji.jpg',
-        description: 'Manzanas frescas y crujientes de la variedad Fuji, perfectas para consumo directo o preparaciones culinarias.',
-        category: 'frutas'
+        description: 'Manzanas Fuji crujientes y dulces, cultivadas en el Valle del Maule.',
+        category: 'Frutas',
+        origin: 'Valle del Maule, Chile',
+        sustainablePractices: 'Certificado orgánico, riego eficiente',
+        suggestedRecipes: ['Ensalada de manzana', 'Tarta de manzana']
     },
     {
         name: 'Naranjas Valencia',
-        price: 1800,
-        stock: 75,
-        image: '../images/naranjas-valencia.jpg',
-        description: 'Naranjas jugosas de la variedad Valencia, ideales para zumos y consumo fresco.',
-        category: 'frutas'
+        price: 1000,
+        stock: 200,
+        image: '../images/naranja-valencia.jpg',
+        description: 'Jugosas y ricas en vitamina C, estas naranjas Valencia son ideales para zumos frescos y refrescantes.',
+        category: 'Frutas',
+        origin: 'Región de O\'Higgins, Chile',
+        sustainablePractices: 'Agricultura sostenible, sin pesticidas',
+        suggestedRecipes: ['Zumo de naranja', 'Ensalada cítrica']
     },
     {
         name: 'Plátanos Cavendish',
-        price: 1200,
-        stock: 100,
-        image: '../images/platanos-cavendish.jpg',
-        description: 'Plátanos maduros y dulces, ricos en potasio y energía natural.',
-        category: 'frutas'
+        price: 800,
+        stock: 250,
+        image: '../images/platano-cavendish.jpg',
+        description: 'Plátanos maduros y dulces, perfectos para el desayuno o como snack energético.',
+        category: 'Frutas',
+        origin: 'Costa Central, Chile',
+        sustainablePractices: 'Cultivo orgánico',
+        suggestedRecipes: ['Plátano con miel', 'Batido de plátano']
     },
     {
         name: 'Zanahorias Orgánicas',
-        price: 1500,
+        price: 900,
+        stock: 100,
+        image: '../images/zanahoria-organica.jpg',
+        description: 'Zanahorias crujientes cultivadas sin pesticidas en la Región de O\'Higgins.',
+        category: 'Verduras',
+        origin: 'Región Metropolitana, Chile',
+        sustainablePractices: 'Orgánico certificado',
+        suggestedRecipes: ['Zanahorias glaseadas', 'Sopa de zanahoria']
+    },
+    {
+        name: 'Espinacas Frescas',
+        price: 700,
         stock: 80,
-        image: '../images/zanahorias-organicas.jpg',
-        description: 'Zanahorias orgánicas cultivadas sin pesticidas, perfectas para ensaladas y cocinar.',
-        category: 'verduras'
+        image: '../images/espinaca-fresca.jpg',
+        description: 'Espinacas frescas y nutritivas, perfectas para ensaladas y batidos verdes.',
+        category: 'Verduras',
+        origin: 'Valle Central, Chile',
+        sustainablePractices: 'Cultivo hidropónico sostenible',
+        suggestedRecipes: ['Ensalada de espinacas', 'Batido verde']
     },
     {
         name: 'Pimientos Tricolores',
-        price: 3200,
+        price: 1500,
+        stock: 120,
+        image: '../images/pimiento-tricolor.jpg',
+        description: 'Pimientos rojos, amarillos y verdes, ideales para salteados y platos coloridos.',
+        category: 'Verduras',
+        origin: 'Región del Maule, Chile',
+        sustainablePractices: 'Agricultura integrada',
+        suggestedRecipes: ['Pimientos rellenos', 'Ensalada de pimientos']
+    },
+    {
+        name: 'Miel Organica',
+        price: 5000,
         stock: 40,
-        image: '../images/pimientos-tricolores.jpg',
-        description: 'Mix de pimientos rojos, amarillos y verdes, ideales para salteados y ensaladas.',
-        category: 'verduras'
+        image: '../images/miel-organica.jpg',
+        description: 'Miel pura y organica producida por apicultores locales.',
+        category: 'Productos Organicos',
+        origin: 'Región de Los Lagos, Chile',
+        sustainablePractices: 'Apicultura orgánica',
+        suggestedRecipes: ['Té con miel', 'Aderezo de miel']
     },
     {
-        name: 'Lechuga Romana',
-        price: 800,
+        name: 'Quinoa Organica',
+        price: 6000,
+        stock: 40,
+        image: '../images/quinoa-organica.jpg',
+        description: 'Quinoa 100% orgánica, rica en proteínas, ideal para dietas saludables y libre de gluten. Cultivada sin pesticidas ni químicos.',
+        category: 'Productos Organicos',
+        origin: 'Altiplano chileno',
+        sustainablePractices: 'Cultivo ancestral sostenible',
+        suggestedRecipes: ['Quinoa con verduras', 'Ensalada de quinoa']
+    },
+    {
+        name: 'Leche Entera',
+        price: 1100,
         stock: 60,
-        image: '../images/lechuga-romana.jpg',
-        description: 'Lechuga romana fresca y crujiente, perfecta para ensaladas César.',
-        category: 'verduras'
-    },
-    {
-        name: 'Tomates Cherry',
-        price: 2800,
-        stock: 35,
-        image: '../images/tomates-cherry.jpg',
-        description: 'Tomates cherry dulces y jugosos, ideales para aperitivos y ensaladas.',
-        category: 'verduras'
-    },
-    {
-        name: 'Aguacates Hass',
-        price: 4500,
-        stock: 25,
-        image: '../images/aguacates-hass.jpg',
-        description: 'Aguacates Hass cremosos y nutritivos, perfectos para guacamole y tostadas.',
-        category: 'frutas'
+        image: '../images/leche-entera.jpg',
+        description: 'Leche entera pasteurizada de alta calidad, fuente natural de calcio y vitaminas. Perfecta para consumo diario.',
+        category: 'Productos Lacteos',
+        origin: 'Región de Los Lagos, Chile',
+        sustainablePractices: 'Ganadería sostenible',
+        suggestedRecipes: ['Café con leche', 'Cereal con leche']
     }
 ];
 
@@ -81,6 +116,9 @@ function loadProductData() {
     const productStock = getUrlParameter('stock');
     const productImage = getUrlParameter('image');
     const productDescription = getUrlParameter('description');
+    const productOrigin = getUrlParameter('origin');
+    const productSustainablePractices = getUrlParameter('sustainablePractices');
+    const productSuggestedRecipes = getUrlParameter('suggestedRecipes');
 
     // Lista de productos que se venden por KG
     const kgProducts = ['Manzana Fuji', 'Naranjas Valencia', 'Plátanos Cavendish', 'Zanahorias Orgánicas', 'Pimientos Tricolores'];
@@ -121,6 +159,20 @@ function loadProductData() {
 
     if (productDescription) {
         document.getElementById('productDescription').textContent = productDescription;
+    }
+
+    if (productOrigin) {
+        document.getElementById('productOrigin').textContent = productOrigin;
+    }
+
+    if (productSustainablePractices) {
+        document.getElementById('productSustainablePractices').textContent = productSustainablePractices;
+    }
+
+    if (productSuggestedRecipes) {
+        const recipes = productSuggestedRecipes.split('|');
+        const recipesList = document.getElementById('productRecipes');
+        recipesList.innerHTML = recipes.map(recipe => `<li>${recipe}</li>`).join('');
     }
 }
 
@@ -233,7 +285,7 @@ function createRecommendedProductHTML(product) {
                 <p class="product-price">${priceText}</p>
                 <p class="product-stock">Stock: ${stockText}</p>
                 <div class="product-actions">
-                    <a href="product-detail.html?name=${encodeURIComponent(product.name)}&price=${product.price}&stock=${product.stock}&image=${encodeURIComponent(product.image)}&description=${encodeURIComponent(product.description)}" class="btn-secondary">
+                    <a href="product-detail.html?name=${encodeURIComponent(product.name)}&price=${product.price}&stock=${product.stock}&image=${encodeURIComponent(product.image)}&description=${encodeURIComponent(product.description)}&origin=${encodeURIComponent(product.origin)}&sustainablePractices=${encodeURIComponent(product.sustainablePractices)}&suggestedRecipes=${encodeURIComponent(product.suggestedRecipes.join('|'))}" class="btn-secondary">
                         Ver Detalles
                     </a>
                     <button class="btn-primary" onclick="addRecommendedToCart('${product.name}', ${product.price}, '${product.image}')">
