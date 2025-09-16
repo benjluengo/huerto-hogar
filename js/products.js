@@ -122,7 +122,7 @@ function displayFeaturedProducts() {
 
     productsGrid.innerHTML = featuredProducts.map(product => `
         <div class="product-card">
-            <img src="${product.image}" alt="${product.name}" class="product-image">
+            <img src="${product.image.replace('../', '')}" alt="${product.name}" class="product-image">
             <div class="product-info">
                 <div class="product-name">${product.name}</div>
                 <div class="product-price">$${product.price.toLocaleString()}</div>
