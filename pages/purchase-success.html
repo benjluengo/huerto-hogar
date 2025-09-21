@@ -48,16 +48,26 @@
     <main>
         <section class="success-section">
             <div class="container">
-                <div class="success-message">
-                    <i class="fas fa-check-circle success-icon"></i>
-                    <h2>¡Compra Realizada con Éxito!</h2>
-                    <p>Gracias por tu compra. Tu pedido ha sido procesado correctamente.</p>
-                    <p>Recibirás un correo electrónico con los detalles de tu pedido.</p>
-                    <div class="success-actions">
-                        <a href="../index.html" class="btn-primary">Volver al Inicio</a>
-                        <a href="productos.html" class="btn-secondary">Seguir Comprando</a>
-                    </div>
+            <div class="success-message" id="orderDetails">
+                <i class="fas fa-check-circle success-icon"></i>
+                <h2>¡Compra Realizada con Éxito!</h2>
+                <p>Gracias por tu compra. Tu pedido ha sido procesado correctamente.</p>
+                <p>Recibirás un correo electrónico con los detalles de tu pedido.</p>
+                <div id="orderInfo" style="margin-top: 1rem; background: #f0f9f4; padding: 1rem; border-radius: 8px; color: #2f855a;">
+                    <h3>Detalles del Pedido</h3>
+                    <p><strong>ID de Pedido:</strong> <span id="orderId"></span></p>
+                    <p><strong>Fecha de Pedido:</strong> <span id="orderDate"></span></p>
+                    <p><strong>Fecha de Entrega:</strong> <span id="orderDeliveryDate"></span></p>
+                    <p><strong>Total:</strong> $<span id="orderTotal"></span></p>
+                    <p><strong>Estado:</strong> <span id="orderStatus"></span></p>
+                    <p><strong>Productos:</strong></p>
+                    <ul id="orderItems"></ul>
                 </div>
+                <div class="success-actions">
+                    <a href="../index.html" class="btn-primary">Volver al Inicio</a>
+                    <a href="productos.html" class="btn-secondary">Seguir Comprando</a>
+                </div>
+            </div>
             </div>
         </section>
     </main>
@@ -92,6 +102,7 @@
     </footer>
 
     <script src="../js/script.js"></script>
+    <script src="../js/purchase-success.js"></script>
 </body>
 
 </html>

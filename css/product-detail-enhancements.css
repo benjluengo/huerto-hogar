@@ -85,3 +85,9 @@
 .product-recipes li {
     margin-bottom: 0.3rem;
 }
+
+/* Remove text-decoration from all product links and their children on productos page */
+#productsGrid a,
+#productsGrid a * {
+    text-decoration: none !important;
+}

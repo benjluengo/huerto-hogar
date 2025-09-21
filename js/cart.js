@@ -88,20 +88,69 @@ function updateCartCount() {
     }
 }
 
-// Función para procesar compra
 function processCheckout() {
     if (cart.length === 0) {
         showNotification('Tu carrito está vacío', 'error');
         return;
     }
 
-    // Aquí podrías agregar validación de usuario, pero por ahora solo limpiamos el carrito
+    // Get delivery date value
+    const deliveryDateInput = document.getElementById('deliveryDate');
+    const deliveryDate = deliveryDateInput ? deliveryDateInput.value : null;
+
+    if (!deliveryDate) {
+        showNotification('Por favor, selecciona una fecha de entrega preferida.', 'error');
+        return;
+    }
+
+    // Validate delivery date is today or later
+    const today = new Date();
+    const selectedDate = new Date(deliveryDate);
+    today.setHours(0,0,0,0);
+    selectedDate.setHours(0,0,0,0);
+    if (selectedDate < today) {
+        showNotification('La fecha de entrega no puede ser anterior a hoy.', 'error');
+        return;
+    }
+
+    // Create order object
+    const order = {
+        id: Date.now().toString(),
+        date: new Date().toISOString(),
+        deliveryDate: deliveryDate,
+        status: 'pending',
+        items: cart.map(item => item.name),
+        total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    };
+
+    // Save order to currentUser purchases
+    let currentUser = JSON.parse(localStorage.getItem('huertohogar_currentUser') || 'null');
+    if (!currentUser) {
+        showNotification('Debes iniciar sesión para realizar la compra.', 'error');
+        return;
+    }
+
+    if (!currentUser.purchases) {
+        currentUser.purchases = [];
+    }
+    currentUser.purchases.push(order);
+
+    // Update localStorage
+    const allUsers = JSON.parse(localStorage.getItem('huertohogar_users') || '[]');
+    const userIndex = allUsers.findIndex(u => u.id === currentUser.id);
+    if (userIndex !== -1) {
+        allUsers[userIndex] = currentUser;
+        localStorage.setItem('huertohogar_users', JSON.stringify(allUsers));
+    }
+    localStorage.setItem('huertohogar_currentUser', JSON.stringify(currentUser));
+
+    // Clear cart
     cart = [];
     saveCart();
     updateCartCount();
 
-    // Redirigir a página de éxito
-    window.location.href = 'purchase-success.html';
+    // Redirect to purchase success page with order id in query string
+    window.location.href = `purchase-success.html?orderId=${order.id}`;
 }
 
 // Función para mostrar notificaciones
