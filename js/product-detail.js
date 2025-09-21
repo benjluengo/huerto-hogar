@@ -619,3 +619,128 @@ window.decreaseQuantity = decreaseQuantity;
 window.addRecommendedToCart = addRecommendedToCart;
 window.goBack = goBack;
 window.shareProduct = shareProduct;
+
+// Reviews and Ratings Feature
+
+// Key for storing reviews in localStorage
+const REVIEWS_STORAGE_KEY = 'huertohogar_product_reviews';
+
+// Load reviews for a product from localStorage
+function loadReviews(productName) {
+    const allReviews = JSON.parse(localStorage.getItem(REVIEWS_STORAGE_KEY) || '{}');
+    return allReviews[productName] || [];
+}
+
+// Save reviews for a product to localStorage
+function saveReviews(productName, reviews) {
+    const allReviews = JSON.parse(localStorage.getItem(REVIEWS_STORAGE_KEY) || '{}');
+    allReviews[productName] = reviews;
+    localStorage.setItem(REVIEWS_STORAGE_KEY, JSON.stringify(allReviews));
+}
+
+// Calculate average rating from reviews
+function calculateAverageRating(reviews) {
+    if (reviews.length === 0) return 0;
+    const total = reviews.reduce((sum, r) => sum + r.rating, 0);
+    return total / reviews.length;
+}
+
+// Display average rating stars
+function displayAverageRating(average) {
+    const averageRatingDiv = document.getElementById('averageRating');
+    averageRatingDiv.innerHTML = '';
+    if (average === 0) {
+        averageRatingDiv.textContent = 'No hay calificaciones aún.';
+        return;
+    }
+    const fullStars = Math.floor(average);
+    const halfStar = average - fullStars >= 0.5;
+    let starsHTML = '';
+    for (let i = 0; i < fullStars; i++) {
+        starsHTML += '&#9733;'; // full star
+    }
+    if (halfStar) {
+        starsHTML += '&#9734;'; // half star (using empty star as approximation)
+    }
+    averageRatingDiv.innerHTML = `Calificación promedio: <span class="stars">${starsHTML}</span> (${average.toFixed(1)})`;
+}
+
+// Display list of reviews
+function displayReviews(reviews) {
+    const reviewsList = document.getElementById('reviewsList');
+    reviewsList.innerHTML = '';
+    if (reviews.length === 0) {
+        reviewsList.innerHTML = '<li>No hay reseñas aún.</li>';
+        return;
+    }
+    reviews.forEach(review => {
+        const li = document.createElement('li');
+        li.className = 'review-item';
+        const stars = '&#9733;'.repeat(review.rating) + '&#9734;'.repeat(5 - review.rating);
+        li.innerHTML = `
+            <div class="review-rating">${stars}</div>
+            <div class="review-text">${escapeHtml(review.text)}</div>
+        `;
+        reviewsList.appendChild(li);
+    });
+}
+
+// Escape HTML to prevent XSS
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Handle review form submission
+function handleReviewFormSubmit(event) {
+    event.preventDefault();
+    const productName = getUrlParameter('name');
+    if (!productName) {
+        alert('No se pudo identificar el producto para la reseña.');
+        return;
+    }
+    const ratingInput = document.querySelector('input[name="rating"]:checked');
+    const reviewText = document.getElementById('reviewText').value.trim();
+
+    if (!ratingInput) {
+        alert('Por favor, seleccione una calificación.');
+        return;
+    }
+    if (reviewText.length === 0) {
+        alert('Por favor, escriba una reseña.');
+        return;
+    }
+
+    const rating = parseInt(ratingInput.value);
+    const reviews = loadReviews(productName);
+    reviews.push({ rating, text: reviewText });
+    saveReviews(productName, reviews);
+
+    displayReviews(reviews);
+    displayAverageRating(calculateAverageRating(reviews));
+
+    // Reset form
+    event.target.reset();
+    alert('Gracias por su reseña.');
+}
+
+// Initialize reviews section on page load
+function initReviews() {
+    const productName = getUrlParameter('name');
+    if (!productName) return;
+
+    const reviews = loadReviews(productName);
+    displayReviews(reviews);
+    displayAverageRating(calculateAverageRating(reviews));
+
+    const reviewForm = document.getElementById('reviewForm');
+    if (reviewForm) {
+        reviewForm.addEventListener('submit', handleReviewFormSubmit);
+    }
+}
+
+// Initialize reviews when DOM content is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initReviews();
+});
