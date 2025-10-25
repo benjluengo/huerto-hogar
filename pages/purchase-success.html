@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compra Exitosa - HUERTO HOGAR</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="../index.html" class="nav-brand">
+            🥕 Huerto Hogar
+        </a>
+        <ul class="nav-menu">
+            <li><a href="../index.html" class="nav-link">Inicio</a></li>
+            <li><a href="productos.html" class="nav-link">Productos</a></li>
+            <li><a href="cart.html" class="nav-link">Carrito</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="cart.html" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </a>
+            <div class="nav-user">
+                <div class="user-menu">
+                    <button class="user-icon" onclick="toggleUserMenu()">
+                        <i class="fa-solid fa-user"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="login.html" class="dropdown-item">
+                            <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                        </a>
+                        <a href="register.html" class="dropdown-item">
+                            <i class="fas fa-user-plus"></i> Registrarse
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="success-section">
+            <div class="container">
+            <div class="success-message" id="orderDetails">
+                <i class="fas fa-check-circle success-icon"></i>
+                <h2>¡Compra Realizada con Éxito!</h2>
+                <p>Gracias por tu compra. Tu pedido ha sido procesado correctamente.</p>
+                <p>Recibirás un correo electrónico con los detalles de tu pedido.</p>
+                <div id="orderInfo" style="margin-top: 1rem; background: #f0f9f4; padding: 1rem; border-radius: 8px; color: #2f855a;">
+                    <h3>Detalles del Pedido</h3>
+                    <p><strong>ID de Pedido:</strong> <span id="orderId"></span></p>
+                    <p><strong>Fecha de Pedido:</strong> <span id="orderDate"></span></p>
+                    <p><strong>Fecha de Entrega:</strong> <span id="orderDeliveryDate"></span></p>
+                    <p><strong>Total:</strong> $<span id="orderTotal"></span></p>
+                    <p><strong>Estado:</strong> <span id="orderStatus"></span></p>
+                    <p><strong>Productos:</strong></p>
+                    <ul id="orderItems"></ul>
+                </div>
+                <div class="success-actions">
+                    <a href="../index.html" class="btn-primary">Volver al Inicio</a>
+                    <a href="productos.html" class="btn-secondary">Seguir Comprando</a>
+                </div>
+            </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Huerto Hogar</h3>
+                    <p>Conectando el campo con tu mesa. Productos frescos y orgánicos directamente del productor.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="productos.html">Productos</a></li>
+                        <li><a href="contact.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p><i class="fas fa-phone"></i> +56 9 1234 5678</p>
+                    <p><i class="fas fa-envelope"></i> info@huertohogar.cl</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Santiago, Chile</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Huerto Hogar. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/script.js"></script>
+    <script src="../js/purchase-success.js"></script>
+</body>
+
+</html>

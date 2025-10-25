@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>HUERTO HOGAR - Tienda Online</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="nav-brand">
+            🥕 Huerto Hogar
+        </a>
+        <ul class="nav-menu">
+            <li><a href="index.html" class="nav-link active">Inicio</a></li>
+            <li><a href="pages/env-impact.html" class="nav-link">Nosotros</a></li>
+            <li><a href="pages/blog.html" class="nav-link">Blog</a></li>
+            <li><a href="pages/contact.html" class="nav-link">Contacto</a></li>
+            <li><a href="pages/productos.html" class="nav-link">Productos</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="pages/cart.html" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </a>
+            <div class="nav-user">
+                <div class="user-menu">
+                    <button class="user-icon" onclick="toggleUserMenu()">
+                        <i class="fa-solid fa-user"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="pages/login.html" class="dropdown-item">
+                            <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                        </a>
+                        <a href="pages/register.html" class="dropdown-item">
+                            <i class="fas fa-user-plus"></i> Registrarse
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>¡Descubre la frescura del campo con Huerto Hogar!</h1>
+                <p>Conéctate con la naturaleza y lleva lo mejor del campo a tu mesa. Productos frescos, orgánicos y directamente del productor al consumidor.</p>
+                <a href="pages/productos.html" class="btn-primary">Ver Productos</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Productos frescos del campo">
+            </div>
+        </section>
+
+        <!-- Productos Destacados -->
+        <section class="featured-products">
+            <div class="container">
+                <h2>Productos Destacados</h2>
+                <div class="products-grid" id="featuredProducts">
+                    <!-- Los productos se cargarán dinámicamente con JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Huerto Hogar</h3>
+                    <p>Conectando el campo con tu mesa. Productos frescos y orgánicos directamente del productor.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="pages/env-impact.html">Nosotros</a></li>
+                        <li><a href="pages/products.html">Productos</a></li>
+                        <li><a href="pages/contact.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p><i class="fas fa-phone"></i> +56 9 1234 5678</p>
+                    <p><i class="fas fa-envelope"></i> info@huertohogar.cl</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Santiago, Chile</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Huerto Hogar. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Verificar que la página se carga
+        console.log('Página cargando...');
+    </script>
+    <script src="./js/config.js"></script>
+    <script src="./js/products.js"></script>
+    <script src="./js/script.js"></script>
+    <script>
+        // Esperar a que todo esté cargado
+        window.addEventListener('load', function() {
+            console.log('Página completamente cargada');
+            setTimeout(() => {
+                console.log('Intentando cargar productos...');
+                loadProducts().catch(error => {
+                    console.error('Error al cargar productos:', error);
+                });
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
+</html>

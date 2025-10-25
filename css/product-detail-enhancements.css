@@ -1,0 +1,211 @@
+.product-origin, .product-sustainable, .product-share, .product-recipes {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #f0f8f5;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.product-origin h3,
+.product-sustainable h3,
+.product-share h3,
+.product-recipes h3 {
+    margin-bottom: 0.5rem;
+    color: #2f855a;
+    font-weight: 600;
+}
+
+.product-share .share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.share-btn.facebook {
+    background-color: #1877f2;
+    color: white;
+}
+
+.share-btn.facebook:hover {
+    background-color: #166fe5;
+}
+
+.share-btn.twitter {
+    background-color: #1da1f2;
+    color: white;
+}
+
+.share-btn.twitter:hover {
+    background-color: #1a91da;
+}
+
+.share-btn.whatsapp {
+    background-color: #25d366;
+    color: white;
+}
+
+.share-btn.whatsapp:hover {
+    background-color: #22c55e;
+}
+
+.share-btn.copy {
+    background-color: #6b7280;
+    color: white;
+}
+
+.share-btn.copy:hover {
+    background-color: #4b5563;
+}
+
+.product-recipes ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin: 0;
+}
+
+.product-recipes li {
+    margin-bottom: 0.3rem;
+}
+
+/* Remove text-decoration from all product links and their children on productos page */
+#productsGrid a,
+#productsGrid a * {
+    text-decoration: none !important;
+}
+
+/* Reviews and Ratings Section Styling */
+.product-reviews {
+    margin-top: 2rem;
+}
+
+.product-reviews h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    color: #2E8B57;
+}
+
+.average-rating {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: #f39c12;
+    font-weight: 600;
+}
+
+.average-rating .stars {
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+}
+
+.reviews-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+    max-height: 300px;
+    overflow-y: auto;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.review-item {
+    border-bottom: 1px solid #eee;
+    padding: 1rem 0;
+    transition: background-color 0.3s ease;
+    border-radius: 8px;
+}
+
+.review-item:hover {
+    background-color: #f9f9f9;
+}
+
+.review-rating {
+    color: #f39c12;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.review-text {
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.4;
+    white-space: pre-wrap;
+}
+
+.rating-input {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    gap: 0.25rem;
+}
+
+.rating-input input[type="radio"] {
+    display: none;
+}
+
+.rating-input label {
+    font-size: 2.4rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.rating-input input[type="radio"]:checked ~ label,
+.rating-input label:hover,
+.rating-input label:hover ~ label {
+    color: #f39c12;
+}
+
+.review-form textarea {
+    resize: vertical;
+    min-height: 100px;
+    padding: 0.75rem;
+    font-size: 1.1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    transition: border-color 0.3s ease;
+}
+
+.review-form textarea:focus {
+    outline: none;
+    border-color: #2E8B57;
+    box-shadow: 0 0 5px rgba(46, 139, 87, 0.4);
+}
+
+.review-form button.btn-primary {
+    align-self: flex-start;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    background-color: #2E8B57;
+    border: none;
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-shadow: 0 4px 12px rgba(46, 139, 87, 0.3);
+}
+
+.review-form button.btn-primary:hover {
+    background-color: #1f5f3f;
+    box-shadow: 0 6px 16px rgba(31, 95, 63, 0.5);
+}

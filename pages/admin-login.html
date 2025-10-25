@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login Administrador - Huerto Hogar</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #e6f2e6;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .login-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            width: 320px;
+            position: relative;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #2f6627;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2f6627;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        button {
+            width: 100%;
+            background-color: #2f6627;
+            color: white;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        button:hover {
+            background-color: #24621b;
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .back-home-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: transparent;
+            border: none;
+            color: #2f6627;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-decoration: underline;
+            padding: 0;
+        }
+        .back-home-btn:hover {
+            color: #1b3a0a;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <button class="back-home-btn" onclick="window.location.href='../index.html'">&larr; Volver al Inicio</button>
+        <h2>Login Administrador</h2>
+        <form id="adminLoginForm">
+            <label for="adminUsername">Usuario</label>
+            <input type="text" id="adminUsername" name="adminUsername" required autocomplete="off" />
+            <label for="adminPassword">Contraseña</label>
+            <input type="password" id="adminPassword" name="adminPassword" required autocomplete="off" />
+            <div class="error-message" id="loginError">Usuario o contraseña incorrectos</div>
+            <button type="submit">Ingresar</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('adminUsername').value.trim();
+            const password = document.getElementById('adminPassword').value.trim();
+            const errorMessage = document.getElementById('loginError');
+
+            if (username === 'admin' && password === '1234') {
+                // Guardar sesión admin en localStorage
+                localStorage.setItem('huertohogar_adminLoggedIn', 'true');
+                // Redirigir al dashboard admin
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                errorMessage.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

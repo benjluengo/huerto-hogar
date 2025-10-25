@@ -1,0 +1,864 @@
+// Estado global de la aplicación
+let products = [];
+let filteredProducts = [];
+let currentCategoryFilter = '';
+let currentPriceFilter = '';
+let currentStockFilter = '';
+let currentSortFilter = 'name-asc';
+
+// Inicializar la página cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', () => {
+    loadProducts();
+    initializeFilters();
+});
+
+// Función para cargar productos desde el backend y actualizar la UI
+async function loadProducts() {
+    try {
+        const response = await fetch(API_URLS.PRODUCTS, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+        
+        products = await response.json();
+        filteredProducts = [...products];
+        
+        console.log('Productos cargados:', products);
+        
+        if (window.location.pathname.includes('productos.html')) {
+            displayAllProducts();
+            updateResultsCount();
+        } else {
+            displayFeaturedProducts();
+        }
+    } catch (error) {
+        console.error('Error cargando productos:', error);
+        showErrorMessage();
+    }
+}
+
+function showErrorMessage() {
+    const container = document.querySelector('.products-container') || 
+                     document.querySelector('.featured-products') || 
+                     document.getElementById('productsGrid');
+    if (container) {
+        container.innerHTML = `
+            <div class="error-message">
+                <h3>Error al cargar los productos</h3>
+                <p>Por favor, intenta recargar la página</p>
+                <button onclick="loadProducts()" class="btn-primary">
+                    <i class="fas fa-sync"></i> Reintentar
+                </button>
+            </div>
+        `;
+    }
+}
+            },
+            {
+                id: 2,
+                name: "Naranjas Valencia",
+                price: 1000,
+                image: "../images/naranja-valencia.jpg",
+                category: "Frutas",
+                stock: 200,
+                description: "Jugosas y ricas en vitamina C, estas naranjas Valencia son ideales para zumos frescos y refrescantes.",
+                origin: "Región de O'Higgins, Chile",
+                sustainablePractices: "Agricultura sostenible, sin pesticidas",
+                suggestedRecipes: ["Zumo de naranja", "Ensalada cítrica"]
+            },
+            {
+                id: 3,
+                name: "Plátanos Cavendish",
+                price: 800,
+                image: "../images/platano-cavendish.jpg",
+                category: "Frutas",
+                stock: 250,
+                description: "Plátanos maduros y dulces, perfectos para el desayuno o como snack energético.",
+                origin: "Costa Central, Chile",
+                sustainablePractices: "Cultivo orgánico",
+                suggestedRecipes: ["Plátano con miel", "Batido de plátano"]
+            },
+            {
+                id: 4,
+                name: "Zanahorias Orgánicas",
+                price: 900,
+                image: "../images/zanahoria-organica.jpg",
+                category: "Verduras",
+                stock: 100,
+                description: "Zanahorias crujientes cultivadas sin pesticidas en la Región de O'Higgins.",
+                origin: "Región Metropolitana, Chile",
+                sustainablePractices: "Orgánico certificado",
+                suggestedRecipes: ["Zanahorias glaseadas", "Sopa de zanahoria"]
+            },
+            {
+                id: 5,
+                name: "Espinacas Frescas",
+                price: 700,
+                image: "../images/espinaca-fresca.jpg",
+                category: "Verduras",
+                stock: 80,
+                description: "Espinacas frescas y nutritivas, perfectas para ensaladas y batidos verdes.",
+                origin: "Valle Central, Chile",
+                sustainablePractices: "Cultivo hidropónico sostenible",
+                suggestedRecipes: ["Ensalada de espinacas", "Batido verde"]
+            },
+            {
+                id: 6,
+                name: "Pimientos Tricolores",
+                price: 1500,
+                image: "../images/pimiento-tricolor.jpg",
+                category: "Verduras",
+                stock: 120,
+                description: "Pimientos rojos, amarillos y verdes, ideales para salteados y platos coloridos.",
+                origin: "Región del Maule, Chile",
+                sustainablePractices: "Agricultura integrada",
+                suggestedRecipes: ["Pimientos rellenos", "Ensalada de pimientos"]
+            },
+            {
+                id: 7,
+                name: "Miel Organica",
+                price: 5000,
+                image: "../images/miel-organica.jpg",
+                category: "Productos Organicos",
+                stock: 40,
+                description: "Miel pura y organica producida por apicultores locales.",
+                origin: "Región de Los Lagos, Chile",
+                sustainablePractices: "Apicultura orgánica",
+                suggestedRecipes: ["Té con miel", "Aderezo de miel"]
+            },
+            {
+                id: 8,
+                name: "Quinoa Organica",
+                price: 6000,
+                image: "../images/quinoa-organica.jpg",
+                category: "Productos Organicos",
+                stock: 40,
+                description: "Quinoa 100% orgánica, rica en proteínas, ideal para dietas saludables y libre de gluten. Cultivada sin pesticidas ni químicos.",
+                origin: "Altiplano chileno",
+                sustainablePractices: "Cultivo ancestral sostenible",
+                suggestedRecipes: ["Quinoa con verduras", "Ensalada de quinoa"]
+            },
+            {
+                id: 9,
+                name: "Leche Entera",
+                price: 1100,
+                image: "../images/leche-entera.jpg",
+                category: "Productos Lacteos",
+                stock: 60,
+                description: "Leche entera pasteurizada de alta calidad, fuente natural de calcio y vitaminas. Perfecta para consumo diario.",
+                origin: "Región de Los Lagos, Chile",
+                sustainablePractices: "Ganadería sostenible",
+                suggestedRecipes: ["Café con leche", "Cereal con leche"]
+            }
+        ];
+        // Llamar a las funciones de display después de cargar los datos de fallback
+        if (window.location.pathname.includes('productos.html')) {
+            displayAllProducts();
+        } else {
+            displayFeaturedProducts();
+        }
+    }
+}
+
+// Función para mostrar productos destacados
+function displayFeaturedProducts() {
+    const productsGrid = document.getElementById('featuredProducts');
+    if (!productsGrid) return;
+
+    // Mostrar solo los primeros 6 productos
+    const featuredProducts = products.slice(0, 6);
+
+    productsGrid.innerHTML = featuredProducts.map(product => `
+        <div class="product-card">
+            <img src="${product.image.replace('../', '')}" alt="${product.name}" class="product-image">
+            <div class="product-info">
+                <div class="product-name">${product.name}</div>
+                <div class="product-price">$${product.price.toLocaleString()}</div>
+                <button class="btn-secondary" onclick="addToCartFromProducts(${product.id})">
+                    <i class="fas fa-cart-plus"></i> Agregar al Carrito
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Nueva función para mostrar todos los productos en la página productos.html
+function displayAllProducts() {
+    const productsGrid = document.getElementById('productsGrid');
+    if (!productsGrid) return;
+
+    productsGrid.innerHTML = products.map(product => `
+        <a href="product-detail.html?name=${encodeURIComponent(product.name)}&price=${product.price}&stock=${product.stock}&image=${encodeURIComponent(product.image)}&description=${encodeURIComponent(product.description || '')}&origin=${encodeURIComponent(product.origin || '')}&sustainablePractices=${encodeURIComponent(product.sustainablePractices || '')}&suggestedRecipes=${encodeURIComponent((product.suggestedRecipes || []).join('|'))}" class="product-card">
+            <div class="product-image">
+                <img src="${product.image}" alt="${product.name}">
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-price">$${product.price.toLocaleString()} KG</p>
+                <p class="product-stock">Stock: ${product.stock} kilos</p>
+                <p class="product-description">${product.description || ''}</p>
+                <button class="btn-secondary" onclick="event.preventDefault(); addToCartFromProducts(${product.id});">
+                    <i class="fas fa-cart-plus"></i> Agregar al Carrito
+                </button>
+            </div>
+        </a>
+    `).join('');
+}
+
+// Función para agregar producto al carrito (renombrada para evitar conflictos)
+function addToCartFromProducts(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+
+    // Usar la función de script.js que maneja la estructura unificada
+    addProductToCart(product.name, product.price, 1, product.image);
+    
+    showNotification(`${product.name} agregado al carrito`, 'success');
+}
+
+// Función para mostrar notificaciones
+function showNotification(message, type = 'info') {
+    // Crear elemento de notificación
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+        ${message}
+    `;
+
+    // Agregar estilos básicos
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: ${type === 'success' ? '#28a745' : '#17a2b8'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 1001;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        animation: slideIn 0.3s ease;
+    `;
+
+    document.body.appendChild(notification);
+
+    // Animación de entrada
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    `;
+    if (!document.head.querySelector('style[data-notification]')) {
+        style.setAttribute('data-notification', 'true');
+        document.head.appendChild(style);
+    }
+
+    // Remover notificación después de 3 segundos
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// Función para filtrar productos según criterios
+function filterProducts() {
+    const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
+    const categoryFilter = document.getElementById('categoryFilter').value;
+    const priceFilter = document.getElementById('priceFilter').value;
+    const stockFilter = document.getElementById('stockFilter').value;
+    const sortFilter = document.getElementById('sortFilter').value;
+
+    let filtered = products;
+
+    // Filtrar por búsqueda
+    if (searchInput) {
+        filtered = filtered.filter(product =>
+            product.name.toLowerCase().includes(searchInput) ||
+            product.category.toLowerCase().includes(searchInput) ||
+            (product.description && product.description.toLowerCase().includes(searchInput))
+        );
+    }
+
+    // Filtrar por categoría
+    if (categoryFilter) {
+        filtered = filtered.filter(product => product.category === categoryFilter);
+    }
+
+    // Filtrar por rango de precio
+    if (priceFilter) {
+        if (priceFilter === '5000+') {
+            filtered = filtered.filter(product => product.price >= 5000);
+        } else {
+            const [min, max] = priceFilter.split('-').map(Number);
+            filtered = filtered.filter(product => product.price >= min && product.price <= max);
+        }
+    }
+
+    // Filtrar por stock
+    if (stockFilter) {
+        if (stockFilter === 'available') {
+            filtered = filtered.filter(product => product.stock > 0);
+        } else if (stockFilter === 'low-stock') {
+            filtered = filtered.filter(product => product.stock > 0 && product.stock < 50);
+        }
+    }
+
+    // Ordenar
+    if (sortFilter) {
+        switch (sortFilter) {
+            case 'name-asc':
+                filtered.sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case 'name-desc':
+                filtered.sort((a, b) => b.name.localeCompare(a.name));
+                break;
+            case 'price-asc':
+                filtered.sort((a, b) => a.price - b.price);
+                break;
+            case 'price-desc':
+                filtered.sort((a, b) => b.price - a.price);
+                break;
+            case 'stock-desc':
+                filtered.sort((a, b) => b.stock - a.stock);
+                break;
+        }
+    }
+
+    // Mostrar resultados
+    const productsGrid = document.getElementById('productsGrid');
+    const noResults = document.getElementById('noResults');
+    const resultsCount = document.getElementById('resultsCount');
+
+    if (filtered.length === 0) {
+        productsGrid.style.display = 'none';
+        noResults.style.display = 'block';
+        resultsCount.innerHTML = 'Mostrando <strong>0</strong> productos';
+    } else {
+        productsGrid.style.display = 'grid';
+        noResults.style.display = 'none';
+        resultsCount.innerHTML = `Mostrando <strong>${filtered.length}</strong> productos`;
+
+        productsGrid.innerHTML = filtered.map(product => `
+            <a href="product-detail.html?name=${encodeURIComponent(product.name)}&price=${product.price}&stock=${product.stock}&image=${encodeURIComponent(product.image)}&description=${encodeURIComponent(product.description || '')}&origin=${encodeURIComponent(product.origin || '')}&sustainablePractices=${encodeURIComponent(product.sustainablePractices || '')}&suggestedRecipes=${encodeURIComponent((product.suggestedRecipes || []).join('|'))}" class="product-card">
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">${product.name}</h3>
+                    <p class="product-price">$${product.price.toLocaleString()} KG</p>
+                    <p class="product-stock">Stock: ${product.stock} kilos</p>
+                    <p class="product-description">${product.description || ''}</p>
+                    <button class="btn-secondary" onclick="event.preventDefault(); addToCartFromProducts(${product.id});">
+                        <i class="fas fa-cart-plus"></i> Agregar al Carrito
+                    </button>
+                </div>
+            </a>
+        `).join('');
+    }
+}
+
+// Inicializar los event listeners cuando se carga la página
+document.addEventListener('DOMContentLoaded', function() {
+    loadProducts(); // Esto cargará los productos y actualizará la UI
+    
+    // Setup event listeners for search and filters
+    const searchInput = document.getElementById('searchInput');
+    const clearSearch = document.getElementById('clearSearch');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const priceFilter = document.getElementById('priceFilter');
+    const stockFilter = document.getElementById('stockFilter');
+    const sortFilter = document.getElementById('sortFilter');
+    const clearFilters = document.getElementById('clearFilters');
+    const resetSearch = document.getElementById('resetSearch');
+
+    function onFilterChange() {
+        filterProducts();
+        if (clearSearch) {
+            clearSearch.style.display = searchInput.value ? 'inline' : 'none';
+        }
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('input', onFilterChange);
+    }
+    if (clearSearch) {
+        clearSearch.addEventListener('click', () => {
+            searchInput.value = '';
+            onFilterChange();
+        });
+    }
+    if (categoryFilter) {
+        categoryFilter.addEventListener('change', onFilterChange);
+    }
+    if (priceFilter) {
+        priceFilter.addEventListener('change', onFilterChange);
+    }
+    if (stockFilter) {
+        stockFilter.addEventListener('change', onFilterChange);
+    }
+    if (sortFilter) {
+        sortFilter.addEventListener('change', onFilterChange);
+    }
+    if (clearFilters) {
+        clearFilters.addEventListener('click', () => {
+            if (categoryFilter) categoryFilter.value = '';
+            if (priceFilter) priceFilter.value = '';
+            if (stockFilter) stockFilter.value = '';
+            if (sortFilter) sortFilter.value = 'name-asc';
+            if (searchInput) searchInput.value = '';
+            onFilterChange();
+        });
+    }
+    if (resetSearch) {
+        resetSearch.addEventListener('click', () => {
+            if (categoryFilter) categoryFilter.value = '';
+            if (priceFilter) priceFilter.value = '';
+            if (stockFilter) stockFilter.value = '';
+            if (sortFilter) sortFilter.value = 'name-asc';
+            if (searchInput) searchInput.value = '';
+            onFilterChange();
+        });
+    }
+
+    // Initial filter to show all products sorted by name ascending
+    if (sortFilter) {
+        sortFilter.value = 'name-asc';
+        filterProducts();
+    }
+});
+
+// Exportar funciones para uso global
+window.addToCartFromProducts = addToCartFromProducts;
+    products = [
+        {
+            id: 1,
+            name: "Manzana Fuji",
+            price: 1200,
+            image: "../images/manzana-fuji.jpg",
+            category: "Frutas",
+            stock: 150,
+            description: "Manzanas Fuji crujientes y dulces.",
+            origin: "Valle del Maule, Chile",
+            sustainablePractices: "Certificado orgánico",
+            suggestedRecipes: ["Ensalada de manzana", "Tarta de manzana"]
+        },
+        {
+            id: 2,
+            name: "Naranjas Valencia",
+            price: 1000,
+            image: "../images/naranja-valencia.jpg",
+            category: "Frutas",
+            stock: 200,
+            description: "Jugosas y ricas en vitamina C, estas naranjas Valencia son ideales para zumos frescos y refrescantes.",
+            origin: "Región de O'Higgins, Chile",
+            sustainablePractices: "Agricultura sostenible, sin pesticidas",
+            suggestedRecipes: ["Zumo de naranja", "Ensalada cítrica"]
+        },
+        {
+            id: 3,
+            name: "Plátanos Cavendish",
+            price: 800,
+            image: "../images/platano-cavendish.jpg",
+            category: "Frutas",
+            stock: 250,
+            description: "Plátanos maduros y dulces, perfectos para el desayuno o como snack energético.",
+            origin: "Costa Central, Chile",
+            sustainablePractices: "Cultivo orgánico",
+            suggestedRecipes: ["Plátano con miel", "Batido de plátano"]
+        },
+        {
+            id: 4,
+            name: "Zanahorias Orgánicas",
+            price: 900,
+            image: "../images/zanahoria-organica.jpg",
+            category: "Verduras",
+            stock: 100,
+            description: "Zanahorias crujientes cultivadas sin pesticidas en la Región de O'Higgins.",
+            origin: "Región Metropolitana, Chile",
+            sustainablePractices: "Orgánico certificado",
+            suggestedRecipes: ["Zanahorias glaseadas", "Sopa de zanahoria"]
+        },
+        {
+            id: 5,
+            name: "Espinacas Frescas",
+            price: 700,
+            image: "../images/espinaca-fresca.jpg",
+            category: "Verduras",
+            stock: 80,
+            description: "Espinacas frescas y nutritivas, perfectas para ensaladas y batidos verdes.",
+            origin: "Valle Central, Chile",
+            sustainablePractices: "Cultivo hidropónico sostenible",
+            suggestedRecipes: ["Ensalada de espinacas", "Batido verde"]
+        },
+        {
+            id: 6,
+            name: "Pimientos Tricolores",
+            price: 1500,
+            image: "../images/pimiento-tricolor.jpg",
+            category: "Verduras",
+            stock: 120,
+            description: "Pimientos rojos, amarillos y verdes, ideales para salteados y platos coloridos.",
+            origin: "Región del Maule, Chile",
+            sustainablePractices: "Agricultura integrada",
+            suggestedRecipes: ["Pimientos rellenos", "Ensalada de pimientos"]
+        },
+        {
+            id: 7,
+            name: "Miel Organica",
+            price: 5000,
+            image: "../images/miel-organica.jpg",
+            category: "Productos Organicos",
+            stock: 40,
+            description: "Miel pura y organica producida por apicultores locales.",
+            origin: "Región de Los Lagos, Chile",
+            sustainablePractices: "Apicultura orgánica",
+            suggestedRecipes: ["Té con miel", "Aderezo de miel"]
+        },
+        {
+            id: 8,
+            name: "Quinoa Organica",
+            price: 6000,
+            image: "../images/quinoa-organica.jpg",
+            category: "Productos Organicos",
+            stock: 40,
+            description: "Quinoa 100% orgánica, rica en proteínas, ideal para dietas saludables y libre de gluten. Cultivada sin pesticidas ni químicos.",
+            origin: "Altiplano chileno",
+            sustainablePractices: "Cultivo ancestral sostenible",
+            suggestedRecipes: ["Quinoa con verduras", "Ensalada de quinoa"]
+        },
+        {
+            id: 9,
+            name: "Leche Entera",
+            price: 1100,
+            image: "../images/leche-entera.jpg",
+            category: "Productos Lacteos",
+            stock: 60,
+            description: "Leche entera pasteurizada de alta calidad, fuente natural de calcio y vitaminas. Perfecta para consumo diario.",
+            origin: "Región de Los Lagos, Chile",
+            sustainablePractices: "Ganadería sostenible",
+            suggestedRecipes: ["Café con leche", "Cereal con leche"]
+        }
+    ];
+
+
+let cart = JSON.parse(localStorage.getItem('huertohogar_cart')) || [];
+
+// Función para mostrar productos destacados
+function displayFeaturedProducts() {
+    const productsGrid = document.getElementById('featuredProducts');
+    if (!productsGrid) return;
+
+    // Mostrar solo los primeros 6 productos
+    const featuredProducts = products.slice(0, 6);
+
+    productsGrid.innerHTML = featuredProducts.map(product => `
+        <div class="product-card">
+            <img src="${product.image.replace('../', '')}" alt="${product.name}" class="product-image">
+            <div class="product-info">
+                <div class="product-name">${product.name}</div>
+                <div class="product-price">$${product.price.toLocaleString()}</div>
+                <button class="btn-secondary" onclick="addToCartFromProducts(${product.id})">
+                    <i class="fas fa-cart-plus"></i> Agregar al Carrito
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Nueva función para mostrar todos los productos en la página productos.html
+function displayAllProducts() {
+    const productsGrid = document.getElementById('productsGrid');
+    if (!productsGrid) return;
+
+    productsGrid.innerHTML = products.map(product => `
+        <a href="product-detail.html?name=${encodeURIComponent(product.name)}&price=${product.price}&stock=${product.stock}&image=${encodeURIComponent(product.image)}&description=${encodeURIComponent(product.description || '')}&origin=${encodeURIComponent(product.origin || '')}&sustainablePractices=${encodeURIComponent(product.sustainablePractices || '')}&suggestedRecipes=${encodeURIComponent((product.suggestedRecipes || []).join('|'))}" class="product-card">
+            <div class="product-image">
+                <img src="${product.image}" alt="${product.name}">
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-price">$${product.price.toLocaleString()} KG</p>
+                <p class="product-stock">Stock: ${product.stock} kilos</p>
+                <p class="product-description">${product.description || ''}</p>
+                <button class="btn-secondary" onclick="event.preventDefault(); addToCartFromProducts(${product.id});">
+                    <i class="fas fa-cart-plus"></i> Agregar al Carrito
+                </button>
+            </div>
+        </a>
+    `).join('');
+}
+
+// Función para filtrar productos según criterios
+function filterProducts() {
+    const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
+    const categoryFilter = document.getElementById('categoryFilter').value;
+    const priceFilter = document.getElementById('priceFilter').value;
+    const stockFilter = document.getElementById('stockFilter').value;
+    const sortFilter = document.getElementById('sortFilter').value;
+
+    let filtered = products;
+
+    // Filtrar por búsqueda
+    if (searchInput) {
+        filtered = filtered.filter(product =>
+            product.name.toLowerCase().includes(searchInput) ||
+            product.category.toLowerCase().includes(searchInput) ||
+            (product.description && product.description.toLowerCase().includes(searchInput))
+        );
+    }
+
+    // Filtrar por categoría
+    if (categoryFilter) {
+        filtered = filtered.filter(product => product.category === categoryFilter);
+    }
+
+    // Filtrar por rango de precio
+    if (priceFilter) {
+        if (priceFilter === '5000+') {
+            filtered = filtered.filter(product => product.price >= 5000);
+        } else {
+            const [min, max] = priceFilter.split('-').map(Number);
+            filtered = filtered.filter(product => product.price >= min && product.price <= max);
+        }
+    }
+
+    // Filtrar por stock
+    if (stockFilter) {
+        if (stockFilter === 'available') {
+            filtered = filtered.filter(product => product.stock > 0);
+        } else if (stockFilter === 'low-stock') {
+            filtered = filtered.filter(product => product.stock > 0 && product.stock < 50);
+        }
+    }
+
+    // Ordenar
+    if (sortFilter) {
+        switch (sortFilter) {
+            case 'name-asc':
+                filtered.sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case 'name-desc':
+                filtered.sort((a, b) => b.name.localeCompare(a.name));
+                break;
+            case 'price-asc':
+                filtered.sort((a, b) => a.price - b.price);
+                break;
+            case 'price-desc':
+                filtered.sort((a, b) => b.price - a.price);
+                break;
+            case 'stock-desc':
+                filtered.sort((a, b) => b.stock - a.stock);
+                break;
+        }
+    }
+
+    // Mostrar resultados
+    const productsGrid = document.getElementById('productsGrid');
+    const noResults = document.getElementById('noResults');
+    const resultsCount = document.getElementById('resultsCount');
+
+    if (filtered.length === 0) {
+        productsGrid.style.display = 'none';
+        noResults.style.display = 'block';
+        resultsCount.innerHTML = 'Mostrando <strong>0</strong> productos';
+    } else {
+        productsGrid.style.display = 'grid';
+        noResults.style.display = 'none';
+        resultsCount.innerHTML = `Mostrando <strong>${filtered.length}</strong> productos`;
+
+        productsGrid.innerHTML = filtered.map(product => `
+            <a href="product-detail.html?name=${encodeURIComponent(product.name)}&price=${product.price}&stock=${product.stock}&image=${encodeURIComponent(product.image)}&description=${encodeURIComponent(product.description || '')}&origin=${encodeURIComponent(product.origin || '')}&sustainablePractices=${encodeURIComponent(product.sustainablePractices || '')}&suggestedRecipes=${encodeURIComponent((product.suggestedRecipes || []).join('|'))}" class="product-card">
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">${product.name}</h3>
+                    <p class="product-price">$${product.price.toLocaleString()} KG</p>
+                    <p class="product-stock">Stock: ${product.stock} kilos</p>
+                    <p class="product-description">${product.description || ''}</p>
+                    <button class="btn-secondary" onclick="event.preventDefault(); addToCartFromProducts(${product.id});">
+                        <i class="fas fa-cart-plus"></i> Agregar al Carrito
+                    </button>
+                </div>
+            </a>
+        `).join('');
+    }
+}
+
+// Inicializar cuando se carga la página
+document.addEventListener('DOMContentLoaded', function() {
+    displayFeaturedProducts();
+    displayAllProducts();
+
+    // Setup event listeners for search and filters
+    const searchInput = document.getElementById('searchInput');
+    const clearSearch = document.getElementById('clearSearch');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const priceFilter = document.getElementById('priceFilter');
+    const stockFilter = document.getElementById('stockFilter');
+    const sortFilter = document.getElementById('sortFilter');
+    const clearFilters = document.getElementById('clearFilters');
+    const resetSearch = document.getElementById('resetSearch');
+
+    function onFilterChange() {
+        filterProducts();
+        clearSearch.style.display = searchInput.value ? 'inline' : 'none';
+    }
+
+    searchInput.addEventListener('input', onFilterChange);
+    clearSearch.addEventListener('click', () => {
+        searchInput.value = '';
+        onFilterChange();
+    });
+    categoryFilter.addEventListener('change', onFilterChange);
+    priceFilter.addEventListener('change', onFilterChange);
+    stockFilter.addEventListener('change', onFilterChange);
+    sortFilter.addEventListener('change', onFilterChange);
+    clearFilters.addEventListener('click', () => {
+        categoryFilter.value = '';
+        priceFilter.value = '';
+        stockFilter.value = '';
+        sortFilter.value = 'name-asc';
+        searchInput.value = '';
+        onFilterChange();
+    });
+    resetSearch.addEventListener('click', () => {
+        categoryFilter.value = '';
+        priceFilter.value = '';
+        stockFilter.value = '';
+        sortFilter.value = 'name-asc';
+        searchInput.value = '';
+        onFilterChange();
+    });
+
+    // Initial filter to show all products sorted by name ascending
+    sortFilter.value = 'name-asc';
+    filterProducts();
+});
+
+// Función para agregar producto al carrito (renombrada para evitar conflictos)
+function addToCartFromProducts(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+
+    // Usar la función de script.js que maneja la estructura unificada
+    addProductToCart(product.name, product.price, 1, product.image);
+    
+    showNotification(`${product.name} agregado al carrito`, 'success');
+}
+
+// Función para mostrar notificaciones
+function showNotification(message, type = 'info') {
+    // Crear elemento de notificación
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+        ${message}
+    `;
+
+    // Agregar estilos básicos
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: ${type === 'success' ? '#28a745' : '#17a2b8'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 1001;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        animation: slideIn 0.3s ease;
+    `;
+
+    document.body.appendChild(notification);
+
+    // Animación de entrada
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    `;
+    if (!document.head.querySelector('style[data-notification]')) {
+        style.setAttribute('data-notification', 'true');
+        document.head.appendChild(style);
+    }
+
+    // Remover notificación después de 3 segundos
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// Función para obtener productos por categoría
+function getProductsByCategory(category) {
+    return products.filter(product => product.category === category);
+}
+
+// Función para buscar productos
+function searchProducts(query) {
+    const lowercaseQuery = query.toLowerCase();
+    return products.filter(product =>
+        product.name.toLowerCase().includes(lowercaseQuery) ||
+        product.category.toLowerCase().includes(lowercaseQuery)
+    );
+}
+
+// Función para obtener producto por ID
+function getProductById(id) {
+    return products.find(product => product.id === id);
+}
+
+// Función para calcular total del carrito
+function getCartTotal() {
+    const currentCart = getCart();
+    return currentCart.reduce((total, item) => total + (item.price * item.quantity), 0);
+}
+
+// Inicializar cuando se carga la página
+document.addEventListener('DOMContentLoaded', function() {
+    displayFeaturedProducts();
+    // NO llamar updateCartCount() aquí para evitar conflictos
+    // La función de script.js ya se encarga de esto
+});
+
+// Exportar funciones para uso global (sin conflictos)
+window.getProductById = getProductById;
+window.searchProducts = searchProducts;
+window.getProductsByCategory = getProductsByCategory;
+window.addToCartFromProducts = addToCartFromProducts;

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosotros - HUERTO HOGAR</title>
+    <link rel="stylesheet" href="../css/about.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="../index.html" class="nav-brand">
+            🥕 Huerto Hogar
+        </a>
+        <ul class="nav-menu">
+            <li><a href="../index.html" class="nav-link">Inicio</a></li>
+            <li><a href="env-impact.html" class="nav-link active">Nosotros</a></li>
+            <li><a href="blog.html" class="nav-link">Blog</a></li>
+            <li><a href="contact.html" class="nav-link">Contacto</a></li>
+            <li><a href="productos.html" class="nav-link">Productos</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="cart.html" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </a>
+            <div class="nav-user">
+                <div class="user-menu">
+                    <button class="user-icon" onclick="toggleUserMenu()">
+                        <i class="fa-solid fa-user"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="pages/login.html" class="dropdown-item">
+                            <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                        </a>
+                        <a href="pages/register.html" class="dropdown-item">
+                            <i class="fas fa-user-plus"></i> Registrarse
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>Sobre Huerto Hogar</h1>
+                <p>Conectando el campo con tu mesa desde hace más de 6 años</p>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Campo agrícola">
+            </div>
+        </section>
+
+        <!-- Company Info Section -->
+        <section class="products-section">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2 class="section-title">Nuestra Historia</h2>
+                        <p>HuertoHogar es una tienda online dedicada a llevar la frescura y calidad de los productos del campo directamente a la puerta de nuestros clientes en Chile. Con más de 6 años de experiencia, operamos en más de 9 puntos a lo largo del país, incluyendo ciudades clave como Santiago, Puerto Montt, Villarica, Nacimiento, Viña del Mar, Valparaíso, y Concepción.</p>
+                        <p>Nuestra misión es conectar a las familias chilenas con el campo, promoviendo un estilo de vida saludable y sostenible.</p>
+                    </div>
+                    <div class="about-image">
+                        <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Productos frescos">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission Section -->
+        <section class="featured-products">
+            <div class="container">
+                <h2 class="section-title">Nuestra Misión</h2>
+                <div class="mission-card">
+                    <div class="mission-content">
+                        <i class="fas fa-bullseye mission-icon"></i>
+                        <h3>Proporcionar Productos Frescos y de Calidad</h3>
+                        <p>Nuestra misión es proporcionar productos frescos y de calidad directamente desde el campo hasta la puerta de nuestros clientes, garantizando la frescura y el sabor en cada entrega. Nos comprometemos a fomentar una conexión más cercana entre los consumidores y los agricultores locales, apoyando prácticas agrícolas sostenibles y promoviendo una alimentación saludable en todos los hogares chilenos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Environmental Impact Section -->
+        <section class="products-section">
+            <div class="container">
+                <h2 class="section-title">Nuestro Impacto Ambiental</h2>
+                <div class="impact-grid">
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3>Huella de Carbono Reducida</h3>
+                        <p>Cada compra que realizas en HuertoHogar contribuye a reducir la huella de carbono. Al elegir productos locales, disminuyes la necesidad de transporte de larga distancia, lo que significa menos emisiones de CO2 y un impacto positivo en el medio ambiente.</p>
+                        <div class="impact-stat">
+                            <span class="stat-number">30%</span>
+                            <span class="stat-label">Menos CO2 por compra</span>
+                        </div>
+                    </div>
+
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Apoyo a Comunidades Locales</h3>
+                        <p>Tus compras apoyan directamente a las comunidades locales y a los agricultores chilenos. Cada producto que adquieres contribuye al desarrollo sostenible de las zonas rurales, preservando tradiciones agrícolas y fomentando el crecimiento económico local.</p>
+                        <div class="impact-stat">
+                            <span class="stat-number">500+</span>
+                            <span class="stat-label">Agricultores apoyados</span>
+                        </div>
+                    </div>
+
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h3>Prácticas Sostenibles</h3>
+                        <p>Trabajamos exclusivamente con agricultores que implementan prácticas agrícolas sostenibles, sin el uso de pesticidas químicos y respetando los ciclos naturales de la tierra. Esto garantiza productos más saludables y un futuro más verde para Chile.</p>
+                        <div class="impact-stat">
+                            <span class="stat-number">100%</span>
+                            <span class="stat-label">Productos orgánicos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vision Section -->
+        <section class="featured-products">
+            <div class="container">
+                <h2 class="section-title">Nuestra Visión</h2>
+                <div class="vision-card">
+                    <div class="vision-content">
+                        <i class="fas fa-eye vision-icon"></i>
+                        <h3>Ser Líderes en Distribución Sostenible</h3>
+                        <p>Nuestra visión es ser la tienda online líder en la distribución de productos frescos y naturales en Chile, reconocida por nuestra calidad excepcional, servicio al cliente y compromiso con la sostenibilidad. Aspiramos a expandir nuestra presencia a nivel nacional e internacional, estableciendo un nuevo estándar en la distribución de productos agrícolas directos del productor al consumidor.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Developers Section -->
+        <section class="products-section">
+            <div class="container">
+                <h2 class="section-title">Nuestro Equipo</h2>
+                <div class="developers-grid">
+                    <div class="developer-card">
+                        <div class="developer-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h3>Equipo de Desarrollo</h3>
+                        <p>Este sitio web fue desarrollado por estudiantes de la Escuela de Informática y Telecomunicaciones, con el objetivo de crear una plataforma moderna y accesible para conectar a los consumidores con productos frescos del campo chileno.</p>
+                        <p><strong>DSY1104 - Desarrollo Full Stack</strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Stores Map Section -->
+        <section class="products-section">
+            <div class="container">
+                <h2 class="section-title">Nuevas Tiendas</h2>
+                <div id="map" style="width: 100%; height: 400px; border-radius: 12px; box-shadow: 0 4px 15px rgba(46, 139, 87, 0.3);"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Huerto Hogar</h3>
+                    <p>Conectando el campo con tu mesa. Productos frescos y orgánicos directamente del productor.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="env-impact.html">Nosotros</a></li>
+                        <li><a href="productos.html">Productos</a></li>
+                        <li><a href="contact.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p><i class="fas fa-phone"></i> +56 9 1234 5678</p>
+                    <p><i class="fas fa-envelope"></i> info@huertohogar.cl</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Santiago, Chile</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Huerto Hogar. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/map.js"></script>
+</body>
+
+</html>
